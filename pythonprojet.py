@@ -1,5 +1,5 @@
 import re
-#Lire le fichier log, séparer toutes les informations pour chque objet et les mettre dans une liste objet:
+#Lire le fichier log, séparer toutes les informations pour chaque objet et les mettre dans une liste objet:
 def lireficlog(fic_log):
     with open(fic_log, 'r') as ficlog:
         global objet
