@@ -1,3 +1,4 @@
+import json
 import re
 #Lire le fichier log, séparer toutes les informations pour chaque objet et les mettre dans une liste objet:
 def lireficlog(fic_log):
@@ -14,9 +15,12 @@ def lireficlog(fic_log):
             dictionnaire['referrer'] = re.findall('http[^"]+', l)
             dictionnaire['response'] = re.findall('" ([0-9]+)', l)
             dictionnaire['bytes'] = re.findall(' ([0-9]+) "', l)
-            dictionnaire['system_agent'] = re.findall('" "(.*)', l)
-
+            dictionnaire['system_agent'] = re.findall('" "(.*)"', l)
+    jsonfile = open("apache_json.json", "w")
+    json.dump(objet, jsonfile, indent=4, sort_keys=False)
+    jsonfile.close()
     return objet
+
 lireficlog("apache_logs")
 print(objet)
 
