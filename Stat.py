@@ -171,6 +171,10 @@ percent_ios=(ios*100)/(ios+android)
 percent_android=(android*100)/(ios+android)
 percent_pc=((Mac+Win+linux)*100)/((Mac+Win+linux)+(ios+android))
 percent_mobile=((ios+android)*100)/((Mac+Win+linux)+(ios+android))
+percent_chrome=(chrome*100)/(chrome+firefox+safari)
+percent_firefox=(firefox*100)/(chrome+firefox+safari)
+percent_safari=(safari*100)/(chrome+firefox+safari)
+
 
 #affichage:
 print("Mac: "+str(Mac)+" "+str(int(percent_Mac))+"%")
@@ -220,3 +224,10 @@ print()
 print("Pourcentage équipement utilisé: ")
 print("PC:       "+int(percent_pc)*"*")
 print("Mobile:   "+int(percent_mobile)*"*")
+print()
+
+print("Pourcentage navigateur utilisé: ")
+print("Chrome:   "+int(percent_chrome)*"*")
+print("Firefox:  "+int(percent_firefox)*"*")
+print("Safari:   "+int(percent_safari)*"*")
+print()
