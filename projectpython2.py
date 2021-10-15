@@ -10,7 +10,6 @@ def lireficlog(fic_log):
         i = 0
         for l in ficlog:
             dictionnaire = {}
-            objet.append(dictionnaire)
             pattern = '([^ ]+).+\[(.*)\] .+(GET[^"]+|HEAD[^"]+||POST[^"]+)" ([0-9]+|\-) ([0-9]+|\-) "(http[^"]+|\-)"."(.*)"'
             param = re.search(pattern, l)
             if param:
@@ -21,6 +20,7 @@ def lireficlog(fic_log):
                 dictionnaire['response'] = param.group(5)
                 dictionnaire['bytes'] = param.group(6)
                 dictionnaire['system_agent'] = param.group(7)
+                objet.append(dictionnaire)
             else:
                 erreur.append(l)
     jsonfile = open("apache_json.json", "w")
@@ -29,6 +29,5 @@ def lireficlog(fic_log):
     return objet
 
 lireficlog("apache_logs")
-print(objet)
 print('Ligne où il y a une erreur:')
 print(erreur)
