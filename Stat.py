@@ -1,123 +1,118 @@
 
-from pythonprojet import lireficlog,re
+from projectpython2 import lireficlog,re
 objet=lireficlog("apache_logs")
 def detect_mac(log):
     mac = 0
     for l in log:
-        part = "".join(l['system_agent'])      #transformation liste en string
-        if 'Mac' in part:          # recherche Mac OS dans notre liste
+        if 'Mac' in l['system_agent']:          # recherche Mac OS dans notre liste
             mac = mac + 1
     return mac
 def detect_win(log):
     win = 0
     for l in log:
-        part = "".join(l['system_agent'])      #transformation liste en string
-        if 'Windows' in part:  # recherche windows dans notre liste
+        if 'Windows' in l['system_agent']:  # recherche windows dans notre liste
             win = win + 1
     return win
 def detect_linux(log):
     linux = 0
     for l in log:
-        part = "".join(l['system_agent'])      #transformation liste en string
-        if 'Linux' in part:  # recherche linux dans notre liste
+        if 'Linux' in l['system_agent']:  # recherche linux dans notre liste
             linux = linux + 1
     return linux
 def detect_ios(log):
     ios = 0
     for l in log:
-        part = "".join(l['system_agent'])      #transformation liste en string
-        if 'iPhone' in part:  # recherche ios dans notre liste
+        if 'iPhone' in l['system_agent']:  # recherche ios dans notre liste
             ios = ios + 1
     return ios
 def detect_android(log):
     android = 0
     for l in log:
-        part = "".join(l['system_agent'])      #transformation liste en string
-        if 'Android' in part:  # recherche android dans notre liste
+        if 'Android' in l['system_agent']:  # recherche android dans notre liste
             android = android + 1
     return android
 def detect_chrome(log):
     chrome = 0
     for l in log:
-        part = "".join(l['system_agent'])      #transformation liste en string
-        if 'Chrome' in part:  # recherche Chrome dans notre liste
+        if 'Chrome' in l['system_agent']:  # recherche Chrome dans notre liste
             chrome = chrome + 1
     return chrome
 def detect_safari(log):
     safari = 0
     for l in log:
-        part = "".join(l['system_agent'])      #transformation liste en string
-        if 'Safari' in part:  # recherche Safari dans notre liste
+        if 'Safari' in l['system_agent']:  # recherche Safari dans notre liste
             safari = safari + 1
     return safari
 def detect_firefox(log):
     firefox = 0
     for l in log:
-        part = "".join(l['system_agent'])      #transformation liste en string
-        if 'Firefox' in part:  # recherche Firefox dans notre liste
+        if 'Firefox' in l['system_agent']:  # recherche Firefox dans notre liste
             firefox = firefox + 1
     return firefox
 def detect_petitfichier(log):
     petitfic = 0
     for l in log:
-        part = "".join(l['bytes'])      #transformation liste en string
-        if part <= str(1000):  # recherche de fichier inférieur à 1000o dans notre liste
+        if l['bytes'] <= str(1000):  # recherche de fichier inférieur à 1000o dans notre liste
             petitfic =petitfic + 1
     return petitfic
 def detect_grosfichier(log):
     grosfic = 0
     for l in log:
-        part = "".join(l['bytes'])      #transformation liste en string
-        if part > str(1000):  # recherche de fichier supérieur à 1000o dans notre liste
+        if l['bytes'] > str(1000):  # recherche de fichier supérieur à 1000o dans notre liste
             grosfic = grosfic + 1
     return grosfic
 def detect_code200(log):
     code200 = 0
     for l in log:
-        part = "".join(l['response'])      #transformation liste en string
-        if '200' in part:  # recherche de 200 dans notre liste
+        if '200' in l['response']:  # recherche de 200 dans notre liste
             code200 = code200 + 1
     return code200
 def detect_code301(log):
     code301 = 0
     for l in log:
-        part = "".join(l['response'])      #transformation liste en string
-        if '301' in part:  # recherche de 301 dans notre liste
+        if '301' in l['response']:  # recherche de 301 dans notre liste
             code301 = code301 + 1
     return code301
 def detect_code403(log):
     code403 = 0
     for l in log:
-        part = "".join(l['response'])      #transformation liste en string
-        if '403' in part:  # recherche de 403 dans notre liste
+        if '403' in l['response']:  # recherche de 403 dans notre liste
             code403 = code403 + 1
     return code403
 def detect_code404(log):
     code404 = 0
     for l in log:
-        part = "".join(l['response'])      #transformation liste en string
-        if '404' in part:  # recherche de 404 dans notre liste
+        if '404' in l['response']:  # recherche de 404 dans notre liste
             code404 = code404 + 1
     return code404
 def detect_ip(log):
     ip = 0
     for l in log:
-        part = "".join(l['remote_ip'])      #transformation liste en string
-        if l['remote_ip'] != part:  # recherche des IP dans notre liste
+        if l['remote_ip'] != l['remote_ip']:  # recherche des IP dans notre liste
             ip = ip + 1
     return ip
 def detect_get(log):
     get = 0
     for l in log:
-        part = "".join(l['request'])      #transformation liste en string
-        if 'GET' in part:  # recherche des GET dans notre liste
+        if 'GET' in l['request']:  # recherche des GET dans notre liste
             get = get + 1
     return get
+def detect_post(log):
+    post = 0
+    for l in log:
+        if 'POST' in l['request']:  # recherche des POST dans notre liste
+            post = post + 1
+    return post
+def detect_head(log):
+    head = 0
+    for l in log:
+        if 'HEAD' in l['request']:  # recherche des HEAD dans notre liste
+            head = head + 1
+    return head
 def detect_heure_travail_matin(log):
     heure_travail_matin = 0
     for l in log:
-        part = "".join(l['time'])      #transformation liste en string
-        part_time=re.search(':([^ ]+)',part)
+        part_time=re.search(':([^ ]+)',l['time'])
         part_time2=part_time.group(1)
         part_seconde=sum(x * int(t) for x, t in zip([3600, 60, 1], part_time2.split(":")))#conversion heure et minutes en secondes
         if part_seconde >= 28800 and part_seconde < 43200:  # recherche heures de 8h à 11h59
@@ -126,8 +121,7 @@ def detect_heure_travail_matin(log):
 def detect_heure_travail_aprem(log):
     heure_travail_aprem = 0
     for l in log:
-        part = "".join(l['time'])      #transformation liste en string
-        part_time=re.search(':([^ ]+)',part)
+        part_time=re.search(':([^ ]+)',l['time'])
         part_time2=part_time.group(1)
         part_seconde=sum(x * int(t) for x, t in zip([3600, 60, 1], part_time2.split(":")))#conversion heure et minutes en secondes
         if part_seconde >= 43200 and part_seconde <= 61200:  # recherche heures de 12h à 17h
@@ -136,8 +130,7 @@ def detect_heure_travail_aprem(log):
 def detect_heure_supp(log):
     heure_supp = 0
     for l in log:
-        part = "".join(l['time'])      #transformation liste en string
-        part_time=re.search(':([^ ]+)',part)
+        part_time=re.search(':([^ ]+)',l['time'])
         part_time2=part_time.group(1)
         part_seconde=sum(x * int(t) for x, t in zip([3600, 60, 1], part_time2.split(":")))#conversion heure et minutes en secondes
         if part_seconde < 28800 or part_seconde > 61200:  # recherche heures différentes de 8h à 17h
@@ -161,6 +154,8 @@ code403=detect_code403(objet)
 code404=detect_code404(objet)
 ip=detect_ip(objet)
 get=detect_get(objet)
+post=detect_post(objet)
+head=detect_head(objet)
 co_matin=detect_heure_travail_matin(objet)
 co_aprem=detect_heure_travail_aprem(objet)
 co_hors_travail=detect_heure_supp(objet)
@@ -202,9 +197,11 @@ print("Code 403: "+str(code403)+" "+str(int(percent_403))+"%")
 print("Code 404: "+str(code404)+" "+str(int(percent_404))+"%")
 print("Nombre d'IP: "+str(ip))
 print("Nombre de GET: "+str(get))
-print("Connexion de 8H à 11H59: "+str(co_matin)+" "+str(percent_matin)+"%")
-print("Connexion de 12H à 17H: "+str(co_aprem)+" "+str(percent_aprem)+"%")
-print("Connexion autres que de 12H à 17H: "+str(co_hors_travail)+" "+str(percent_hors_travail)+"%")
+print("Nombre de POST: "+str(post))
+print("Nombre de HEAD: "+str(head))
+print("Connexion de 8H à 11H59: "+str(co_matin)+" "+str(int(percent_matin))+"%")
+print("Connexion de 12H à 17H: "+str(co_aprem)+" "+str(int(percent_aprem))+"%")
+print("Connexion autres que de 12H à 17H: "+str(co_hors_travail)+" "+str(int(percent_hors_travail))+"%")
 print()
 
 #affichage graphique
