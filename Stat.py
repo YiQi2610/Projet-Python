@@ -85,6 +85,13 @@ def detect_code301(log):
         if '301' in part:  # recherche de 301 dans notre liste
             code301 = code301 + 1
     return code301
+def detect_code403(log):
+    code403 = 0
+    for l in log:
+        part = "".join(l['response'])      #transformation liste en string
+        if '403' in part:  # recherche de 403 dans notre liste
+            code403 = code403 + 1
+    return code403
 def detect_code404(log):
     code404 = 0
     for l in log:
@@ -150,6 +157,7 @@ petitfichier=detect_petitfichier(objet)
 grosfichier=detect_grosfichier(objet)
 code200=detect_code200(objet)
 code301=detect_code301(objet)
+code403=detect_code403(objet)
 code404=detect_code404(objet)
 ip=detect_ip(objet)
 get=detect_get(objet)
@@ -161,9 +169,10 @@ co_hors_travail=detect_heure_supp(objet)
 percent_hors_travail=(co_hors_travail*100)/(co_matin+co_aprem+co_hors_travail)
 percent_aprem=(co_aprem*100)/(co_matin+co_aprem+co_hors_travail)
 percent_matin=(co_matin*100)/(co_matin+co_aprem+co_hors_travail)
-percent_200=(code200*100)/(code200+code301+code404)
-percent_301=(code301*100)/(code200+code301+code404)
-percent_404=(code404*100)/(code200+code301+code404)
+percent_200=(code200*100)/(code200+code301+code403+code404)
+percent_301=(code301*100)/(code200+code301+code403+code404)
+percent_403=(code403*100)/(code200+code301+code403+code404)
+percent_404=(code404*100)/(code200+code301+code403+code404)
 percent_Mac=(Mac*100)/(Mac+Win+linux)
 percent_Win=(Win*100)/(Mac+Win+linux)
 percent_linux=(linux*100)/(Mac+Win+linux)
@@ -189,6 +198,7 @@ print("Petit fichier(<=1000o): "+str(petitfichier))
 print("Gros fichier(>1000o): "+str(grosfichier))
 print("Code 200: "+str(code200)+" "+str(int(percent_200))+"%")
 print("Code 301: "+str(code301)+" "+str(int(percent_301))+"%")
+print("Code 403: "+str(code403)+" "+str(int(percent_403))+"%")
 print("Code 404: "+str(code404)+" "+str(int(percent_404))+"%")
 print("Nombre d'IP: "+str(ip))
 print("Nombre de GET: "+str(get))
@@ -207,6 +217,7 @@ print()
 print("Nombre de code d'erreur ou succés en %: ")
 print("200:  "+int(percent_200)*"*")
 print("301:  "+int(percent_301)*"*")
+print("403:  "+int(percent_403)*"*")
 print("404:  "+int(percent_404)*"*")
 print()
 
