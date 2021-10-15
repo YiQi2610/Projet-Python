@@ -10,15 +10,15 @@ def lireficlog(fic_log):
         i = 0
         for l in ficlog:
             dictionnaire = {}
-            pattern = '([^ ]+).+\[(.*)\] .+(GET[^"]+|HEAD[^"]+||POST[^"]+)" ([0-9]+|\-) ([0-9]+|\-) "(http[^"]+|\-)"."(.*)"'
+            pattern = '([^ ]+).+\[(.*)\] .+(GET[^"]+|HEAD[^"]+|POST[^"]+)" ([0-9]+|\-) ([0-9]+|\-) "(http[^"]+|\-)"."(.*)"'
             param = re.search(pattern, l)
             if param:
                 dictionnaire['remote_ip'] = param.group(1)
                 dictionnaire['time'] = param.group(2)
                 dictionnaire['request'] = param.group(3)
-                dictionnaire['referrer'] = param.group(4)
-                dictionnaire['response'] = param.group(5)
-                dictionnaire['bytes'] = param.group(6)
+                dictionnaire['response'] = param.group(4)
+                dictionnaire['bytes'] = param.group(5)
+                dictionnaire['referrer'] = param.group(6)
                 dictionnaire['system_agent'] = param.group(7)
                 objet.append(dictionnaire)
             else:
