@@ -1,6 +1,5 @@
-import re
 
-from pythonprojet import lireficlog
+from pythonprojet import lireficlog,re
 objet=lireficlog("apache_logs")
 def detect_mac(log):
     mac = 0
@@ -62,15 +61,14 @@ def detect_petitfichier(log):
     petitfic = 0
     for l in log:
         part = "".join(l['bytes'])      #transformation liste en string
-        if int(part) < 1000:  # recherche de fichier inférieur à 1000 dans notre liste
+        if part <= str(1000):  # recherche de fichier inférieur à 1000o dans notre liste
             petitfic =petitfic + 1
     return petitfic
 def detect_grosfichier(log):
     grosfic = 0
     for l in log:
         part = "".join(l['bytes'])      #transformation liste en string
-        print(part)
-        if int(part) > 1000:  # recherche de fichier supérieur à 1000 dans notre liste
+        if part > str(1000):  # recherche de fichier supérieur à 1000o dans notre liste
             grosfic = grosfic + 1
     return grosfic
 def detect_code200(log):
@@ -108,14 +106,38 @@ def detect_get(log):
         if 'GET' in part:  # recherche des GET dans notre liste
             get = get + 1
     return get
-def detect_heure_travail(log): #pas fini /!\
-    heure_travail = 0
+def detect_heure_travail_matin(log):
+    heure_travail_matin = 0
     for l in log:
-        part = "".join(l['request'])      #transformation liste en string
-        if '08:00:00' in part:  # recherche des heures de travail dans notre liste
-            heure_travail = heure_travail + 1
-    return heure_travail
+        part = "".join(l['time'])      #transformation liste en string
+        part_time=re.search(':([^ ]+)',part)
+        part_time2=part_time.group(1)
+        part_seconde=sum(x * int(t) for x, t in zip([3600, 60, 1], part_time2.split(":")))#conversion heure et minutes en secondes
+        if part_seconde >= 28800 and part_seconde < 43200:  # recherche heures de 8h à 11h59
+            heure_travail_matin = heure_travail_matin + 1
+    return heure_travail_matin
+def detect_heure_travail_aprem(log):
+    heure_travail_aprem = 0
+    for l in log:
+        part = "".join(l['time'])      #transformation liste en string
+        part_time=re.search(':([^ ]+)',part)
+        part_time2=part_time.group(1)
+        part_seconde=sum(x * int(t) for x, t in zip([3600, 60, 1], part_time2.split(":")))#conversion heure et minutes en secondes
+        if part_seconde >= 43200 and part_seconde <= 61200:  # recherche heures de 12h à 17h
+            heure_travail_aprem = heure_travail_aprem + 1
+    return heure_travail_aprem
+def detect_heure_supp(log):
+    heure_supp = 0
+    for l in log:
+        part = "".join(l['time'])      #transformation liste en string
+        part_time=re.search(':([^ ]+)',part)
+        part_time2=part_time.group(1)
+        part_seconde=sum(x * int(t) for x, t in zip([3600, 60, 1], part_time2.split(":")))#conversion heure et minutes en secondes
+        if part_seconde < 28800 or part_seconde > 61200:  # recherche heures différentes de 8h à 17h
+            heure_supp = heure_supp + 1
+    return heure_supp
 
+#Utilisation des fonctions
 Mac=detect_mac(objet)
 Win=detect_win(objet)
 linux=detect_linux(objet)
@@ -131,19 +153,70 @@ code301=detect_code301(objet)
 code404=detect_code404(objet)
 ip=detect_ip(objet)
 get=detect_get(objet)
+co_matin=detect_heure_travail_matin(objet)
+co_aprem=detect_heure_travail_aprem(objet)
+co_hors_travail=detect_heure_supp(objet)
 
-print("Mac: "+str(Mac))
-print("Windows: "+str(Win))
-print("Linux: "+str(linux))
-print("IOS: "+str(ios))
-print("Android: "+str(android))
+#calcul pourcentage:
+percent_hors_travail=(co_hors_travail*100)/(co_matin+co_aprem+co_hors_travail)
+percent_aprem=(co_aprem*100)/(co_matin+co_aprem+co_hors_travail)
+percent_matin=(co_matin*100)/(co_matin+co_aprem+co_hors_travail)
+percent_200=(code200*100)/(code200+code301+code404)
+percent_301=(code301*100)/(code200+code301+code404)
+percent_404=(code404*100)/(code200+code301+code404)
+percent_Mac=(Mac*100)/(Mac+Win+linux)
+percent_Win=(Win*100)/(Mac+Win+linux)
+percent_linux=(linux*100)/(Mac+Win+linux)
+percent_ios=(ios*100)/(ios+android)
+percent_android=(android*100)/(ios+android)
+percent_pc=((Mac+Win+linux)*100)/((Mac+Win+linux)+(ios+android))
+percent_mobile=((ios+android)*100)/((Mac+Win+linux)+(ios+android))
+
+#affichage:
+print("Mac: "+str(Mac)+" "+str(int(percent_Mac))+"%")
+print("Windows: "+str(Win)+" "+str(int(percent_Win))+"%")
+print("Linux: "+str(linux)+" "+str(int(percent_linux))+"%")
+print("IOS: "+str(ios)+" "+str(int(percent_ios))+"%")
+print("Android: "+str(android)+" "+str(int(percent_android))+"%")
 print("Chrome: "+str(chrome))
 print("Safari: "+str(safari))
 print("Firefox: "+str(firefox))
-print("Petit fichier: "+str(petitfichier))
-print("Gros fichier: "+str(grosfichier))
-print("Code 200: "+str(code200))
-print("Code 301: "+str(code301))
-print("Code 404: "+str(code404))
+print("Petit fichier(<=1000o): "+str(petitfichier))
+print("Gros fichier(>1000o): "+str(grosfichier))
+print("Code 200: "+str(code200)+" "+str(int(percent_200))+"%")
+print("Code 301: "+str(code301)+" "+str(int(percent_301))+"%")
+print("Code 404: "+str(code404)+" "+str(int(percent_404))+"%")
 print("Nombre d'IP: "+str(ip))
 print("Nombre de GET: "+str(get))
+print("Connexion de 8H à 11H59: "+str(co_matin)+" "+str(percent_matin)+"%")
+print("Connexion de 12H à 17H: "+str(co_aprem)+" "+str(percent_aprem)+"%")
+print("Connexion autres que de 12H à 17H: "+str(co_hors_travail)+" "+str(percent_hors_travail)+"%")
+print()
+
+#affichage graphique
+print("Nombre de connexion par rapport à l'heure en %: ")
+print("8h-11h59:     "+int(percent_matin)*"*")
+print("12h-17h:      "+int(percent_aprem)*"*")
+print("Hors 8h-17h : "+int(percent_hors_travail)*"*")
+print()
+
+print("Nombre de code d'erreur ou succés en %: ")
+print("200:  "+int(percent_200)*"*")
+print("301:  "+int(percent_301)*"*")
+print("404:  "+int(percent_404)*"*")
+print()
+
+print("Pourcentage OS PC utilisé: ")
+print("Mas OS:   "+int(percent_Mac)*"*")
+print("Windows:  "+int(percent_Win)*"*")
+print("Linux:    "+int(percent_linux)*"*")
+print()
+
+print("Pourcentage OS Mobile utilisé: ")
+print("IOS:      "+int(percent_ios)*"*")
+print("Android:  "+int(percent_android)*"*")
+print()
+
+print("Pourcentage équipement utilisé: ")
+print("PC:       "+int(percent_pc)*"*")
+print("Mobile:   "+int(percent_mobile)*"*")
