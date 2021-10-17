@@ -52,20 +52,23 @@ def detect_firefox(log):
 def detect_petitfichier(log):
     petitfic = 0
     for l in log:
-        if l['bytes'] <= str(1000):  # recherche de fichier inférieur à 1000o dans notre liste
-            petitfic =petitfic + 1
+        if l['bytes'] != '-':
+            if int(l['bytes']) <= int(1000):  # recherche de fichier inférieur à 1000o dans notre liste
+                petitfic =petitfic + 1
     return petitfic
-def detect_moyenfichier(log):#fonctionne pas ???????
+def detect_moyenfichier(log):
     moyenfic = 0
     for l in log:
-        if l['bytes'] < str(10000) and l['bytes'] > str(1000):  # recherche de fichier supérieur à 1000o dans notre liste
-            moyenfic = moyenfic + 1
+        if l['bytes'] != '-':
+            if int(l['bytes']) < int(10000) and int(l['bytes']) > int(1000):  # recherche de fichier supérieur à 1000o dans notre liste
+                moyenfic = moyenfic + 1
     return moyenfic
 def detect_grosfichier(log):
     grosfic = 0
     for l in log:
-        if l['bytes'] >= str(10000):  # recherche de fichier supérieur à 10 000o dans notre liste
-            grosfic = grosfic + 1
+        if l['bytes'] != '-':
+            if int(l['bytes']) >= int(10000):  # recherche de fichier supérieur à 10 000o dans notre liste
+                grosfic = grosfic + 1
     return grosfic
 def detect_code200(log):
     code200 = 0
@@ -207,7 +210,7 @@ print("Safari: "+str(safari)+" "+str(int(percent_safari))+"%")
 print("Firefox: "+str(firefox)+" "+str(int(percent_firefox))+"%")
 print("Petit fichier(<=1000o): "+str(petitfichier)+" "+str(int(percent_petit_fic))+"%")
 print("Moyen fichier(>1000o): "+str(moyenfichier)+" "+str(int(percent_moyen_fic))+"%")
-print("Gros fichier(>10 000o): "+str(grosfichier)+" "+str(int(percent_gros_fic))+"%")
+print("Gros fichier(>=10 000o): "+str(grosfichier)+" "+str(int(percent_gros_fic))+"%")
 print("Code 200: "+str(code200)+" "+str(int(percent_200))+"%")
 print("Code 301: "+str(code301)+" "+str(int(percent_301))+"%")
 print("Code 403: "+str(code403)+" "+str(int(percent_403))+"%")
@@ -269,5 +272,5 @@ print()
 print("Pourcentage taille de fichier utilisée: ")
 print("Petit fichier (<=1000o):    "+int(percent_petit_fic)*"*")
 print("Moyen fichier (>1000o):     "+int(percent_moyen_fic)*"*")
-print("Gros fichier (>10 000o):    "+int(percent_gros_fic)*"*")
+print("Gros fichier (>=10 000o):    "+int(percent_gros_fic)*"*")
 print()
