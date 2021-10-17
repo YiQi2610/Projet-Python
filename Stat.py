@@ -185,6 +185,10 @@ percent_gros_fic=(grosfichier*100)/(grosfichier+petitfichier)
 percent_petit_fic=(petitfichier*100)/(grosfichier+petitfichier)
 
 #affichage:
+print()
+print("##################################################################################################")
+print()
+
 print("Mac: "+str(Mac)+" "+str(int(percent_Mac))+"%")
 print("Windows: "+str(Win)+" "+str(int(percent_Win))+"%")
 print("Linux: "+str(linux)+" "+str(int(percent_linux))+"%")
@@ -206,6 +210,10 @@ print("Nombre de HEAD: "+str(head)+" "+str(int(percent_head))+"%")
 print("Connexion de 8H à 11H59: "+str(co_matin)+" "+str(int(percent_matin))+"%")
 print("Connexion de 12H à 17H: "+str(co_aprem)+" "+str(int(percent_aprem))+"%")
 print("Connexion autres que de 12H à 17H: "+str(co_hors_travail)+" "+str(int(percent_hors_travail))+"%")
+print()
+
+print()
+print("##################################################################################################")
 print()
 
 #affichage graphique
