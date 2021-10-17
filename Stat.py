@@ -55,10 +55,16 @@ def detect_petitfichier(log):
         if l['bytes'] <= str(1000):  # recherche de fichier inférieur à 1000o dans notre liste
             petitfic =petitfic + 1
     return petitfic
+def detect_moyenfichier(log):#fonctionne pas ???????
+    moyenfic = 0
+    for l in log:
+        if l['bytes'] < str(10000) and l['bytes'] > str(1000):  # recherche de fichier supérieur à 1000o dans notre liste
+            moyenfic = moyenfic + 1
+    return moyenfic
 def detect_grosfichier(log):
     grosfic = 0
     for l in log:
-        if l['bytes'] > str(1000):  # recherche de fichier supérieur à 1000o dans notre liste
+        if l['bytes'] > str(10000):  # recherche de fichier supérieur à 10 000o dans notre liste
             grosfic = grosfic + 1
     return grosfic
 def detect_code200(log):
@@ -148,6 +154,7 @@ safari=detect_safari(objet)
 firefox=detect_firefox(objet)
 petitfichier=detect_petitfichier(objet)
 grosfichier=detect_grosfichier(objet)
+moyenfichier=detect_moyenfichier(objet)
 code200=detect_code200(objet)
 code301=detect_code301(objet)
 code403=detect_code403(objet)
@@ -181,8 +188,9 @@ percent_safari=(safari*100)/(chrome+firefox+safari)
 percent_get=(get*100)/(get+head+post)
 percent_post=(post*100)/(get+head+post)
 percent_head=(head*100)/(get+head+post)
-percent_gros_fic=(grosfichier*100)/(grosfichier+petitfichier)
-percent_petit_fic=(petitfichier*100)/(grosfichier+petitfichier)
+percent_gros_fic=(grosfichier*100)/(grosfichier+petitfichier+moyenfichier)
+percent_petit_fic=(petitfichier*100)/(grosfichier+petitfichier+moyenfichier)
+percent_moyen_fic=(moyenfichier*100)/(grosfichier+petitfichier+moyenfichier)
 
 #affichage:
 print()
@@ -198,7 +206,8 @@ print("Chrome: "+str(chrome)+" "+str(int(percent_chrome))+"%")
 print("Safari: "+str(safari)+" "+str(int(percent_safari))+"%")
 print("Firefox: "+str(firefox)+" "+str(int(percent_firefox))+"%")
 print("Petit fichier(<=1000o): "+str(petitfichier)+" "+str(int(percent_petit_fic))+"%")
-print("Gros fichier(>1000o): "+str(grosfichier)+" "+str(int(percent_gros_fic))+"%")
+print("Moyen fichier(>1000o): "+str(moyenfichier)+" "+str(int(percent_moyen_fic))+"%")
+print("Gros fichier(>10 000o): "+str(grosfichier)+" "+str(int(percent_gros_fic))+"%")
 print("Code 200: "+str(code200)+" "+str(int(percent_200))+"%")
 print("Code 301: "+str(code301)+" "+str(int(percent_301))+"%")
 print("Code 403: "+str(code403)+" "+str(int(percent_403))+"%")
@@ -210,7 +219,6 @@ print("Nombre de HEAD: "+str(head)+" "+str(int(percent_head))+"%")
 print("Connexion de 8H à 11H59: "+str(co_matin)+" "+str(int(percent_matin))+"%")
 print("Connexion de 12H à 17H: "+str(co_aprem)+" "+str(int(percent_aprem))+"%")
 print("Connexion autres que de 12H à 17H: "+str(co_hors_travail)+" "+str(int(percent_hors_travail))+"%")
-print()
 
 print()
 print("##################################################################################################")
@@ -259,6 +267,7 @@ print("HEAD:  "+int(percent_head)*"*")
 print()
 
 print("Pourcentage taille de fichier utilisée: ")
-print("Gros fichier (>1000o):    "+int(percent_gros_fic)*"*")
-print("Petit fichier (<=1000o):  "+int(percent_petit_fic)*"*")
+print("Petit fichier (<=1000o):    "+int(percent_petit_fic)*"*")
+print("Moyen fichier (>1000o):     "+int(percent_moyen_fic)*"*")
+print("Gros fichier (>10 000o):    "+int(percent_gros_fic)*"*")
 print()
