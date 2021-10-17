@@ -64,7 +64,7 @@ def detect_moyenfichier(log):#fonctionne pas ???????
 def detect_grosfichier(log):
     grosfic = 0
     for l in log:
-        if l['bytes'] > str(10000):  # recherche de fichier supérieur à 10 000o dans notre liste
+        if l['bytes'] >= str(10000):  # recherche de fichier supérieur à 10 000o dans notre liste
             grosfic = grosfic + 1
     return grosfic
 def detect_code200(log):
