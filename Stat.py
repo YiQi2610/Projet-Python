@@ -145,6 +145,13 @@ def detect_heure_supp(log):
         if part_seconde < 28800 or part_seconde > 61200:  # recherche heures différentes de 8h à 17h
             heure_supp = heure_supp + 1
     return heure_supp
+def detect_adr_ip(log):
+    listeadrip=[]
+    for l in log:
+        if l['remote_ip'] not in listeadrip:
+            listeadrip.append(l['remote_ip']) #recherche des adresse IP differents
+    return len(listeadrip)
+
 
 #Utilisation des fonctions
 Mac=detect_mac(objet)
@@ -169,6 +176,7 @@ head=detect_head(objet)
 co_matin=detect_heure_travail_matin(objet)
 co_aprem=detect_heure_travail_aprem(objet)
 co_hors_travail=detect_heure_supp(objet)
+adrip=detect_adr_ip(objet)
 
 #calcul pourcentage:
 percent_hors_travail=(co_hors_travail*100)/(co_matin+co_aprem+co_hors_travail)
@@ -222,6 +230,7 @@ print("Nombre de HEAD: "+str(head)+" "+str(int(percent_head))+"%")
 print("Connexion de 8H à 11H59: "+str(co_matin)+" "+str(int(percent_matin))+"%")
 print("Connexion de 12H à 17H: "+str(co_aprem)+" "+str(int(percent_aprem))+"%")
 print("Connexion autres que de 12H à 17H: "+str(co_hors_travail)+" "+str(int(percent_hors_travail))+"%")
+print("Nombre d'IP differents: "+str(adrip))
 
 print()
 print("##################################################################################################")
