@@ -10,7 +10,7 @@ def lireficlog(fic_log):
         i = 0
         for l in ficlog:
             dictionnaire = {}
-            pattern = '([^ ]+).+\[(.*)\] .+(GET[^"]+|HEAD[^"]+|POST[^"]+)" ([0-9]+|\-) ([0-9]+|\-) "(http[^"]+|\-)"."(.*)"'
+            pattern = '([^ ]+).+\[(.*)\] .+(GET[^"]+|HEAD[^"]+|POST[^"]+|OPTION[^"]+)" ([0-9]+|\-) ([0-9]+|\-) "(http[^"]+|\-)"."(.*)"'
             param = re.search(pattern, l)
             if param:
                 dictionnaire['remote_ip'] = param.group(1)
