@@ -112,6 +112,12 @@ def detect_head(log):
         if 'HEAD' in l['request']:  # recherche des HEAD dans notre liste
             head = head + 1
     return head
+def detect_options(log):
+    options = 0
+    for l in log:
+        if 'OPTIONS' in l['request']:  # recherche des OPTIONS dans notre liste
+            options= options + 1
+    return options
 def detect_heure_travail_matin(log):
     heure_travail_matin = 0
     for l in log:
@@ -166,6 +172,7 @@ code404=detect_code404(objet)
 get=detect_get(objet)
 post=detect_post(objet)
 head=detect_head(objet)
+options=detect_options(objet)
 co_matin=detect_heure_travail_matin(objet)
 co_aprem=detect_heure_travail_aprem(objet)
 co_hors_travail=detect_heure_supp(objet)
@@ -192,6 +199,7 @@ percent_safari=(safari*100)/(chrome+firefox+safari)
 percent_get=(get*100)/(get+head+post)
 percent_post=(post*100)/(get+head+post)
 percent_head=(head*100)/(get+head+post)
+percent_options=(options*100)/(get+head+post+options)
 percent_gros_fic=(grosfichier*100)/(grosfichier+petitfichier+moyenfichier)
 percent_petit_fic=(petitfichier*100)/(grosfichier+petitfichier+moyenfichier)
 percent_moyen_fic=(moyenfichier*100)/(grosfichier+petitfichier+moyenfichier)
@@ -219,6 +227,7 @@ print("Code 404: "+str(code404)+" "+str(int(percent_404))+"%")
 print("Nombre de GET: "+str(get)+" "+str(int(percent_get))+"%")
 print("Nombre de POST: "+str(post)+" "+str(int(percent_post))+"%")
 print("Nombre de HEAD: "+str(head)+" "+str(int(percent_head))+"%")
+print("Nombre de Options: "+str(options)+" "+str(int(percent_options))+"%")
 print("Connexion de 8H à 11H59: "+str(co_matin)+" "+str(int(percent_matin))+"%")
 print("Connexion de 12H à 17H: "+str(co_aprem)+" "+str(int(percent_aprem))+"%")
 print("Connexion autres que de 12H à 17H: "+str(co_hors_travail)+" "+str(int(percent_hors_travail))+"%")
@@ -268,6 +277,7 @@ print("Pourcentage en-tête HTML utilisée: ")
 print("GET:   "+int(percent_get)*"*")
 print("POST:  "+int(percent_post)*"*")
 print("HEAD:  "+int(percent_head)*"*")
+print("OPTIONS:  "+int(percent_options)*"*")
 print()
 
 print("Pourcentage taille de fichier utilisée: ")
