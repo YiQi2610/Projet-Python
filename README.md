@@ -29,7 +29,7 @@
     },
 
 ```
-## Les Principalles Statistiques
+## Les Principales Statistiques
 * Plage horaire de connexion
 * Le nombre de requête fructueuse et les différents code erreurs
 * Le pourcentage de system d'exploitation mobile ou fixe  
