@@ -243,7 +243,14 @@ def detect_ipcode416(log):
             else :
                 dictip416[l['remote_ip']] = int(dictip416[l['remote_ip']]) + 1
     return dictip416
-
+def detect_adripmenace(log):
+    dictipmenace = {}
+    for l in log:
+            if l['remote_ip'] not in dictipmenace.keys(): #recherche des adresses IP qui ont envoyé beaucoup de requêtes
+                dictipmenace[l['remote_ip']] = 1
+            else:
+                dictipmenace[l['remote_ip']] = int(dictipmenace[l['remote_ip']]) + 1
+    return dictipmenace
 
 #Utilisation des fonctions
 Mac=detect_mac(objet)
