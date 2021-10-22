@@ -94,12 +94,6 @@ def detect_code404(log):
         if '404' in l['response']:  # recherche de 404 dans notre liste
             code404 = code404 + 1
     return code404
-def detect_ip(log):
-    ip = 0
-    for l in log:
-        if l['remote_ip'] != l['remote_ip']:  # recherche des IP dans notre liste
-            ip = ip + 1
-    return ip
 def detect_get(log):
     get = 0
     for l in log:
@@ -169,7 +163,6 @@ code200=detect_code200(objet)
 code301=detect_code301(objet)
 code403=detect_code403(objet)
 code404=detect_code404(objet)
-ip=detect_ip(objet)
 get=detect_get(objet)
 post=detect_post(objet)
 head=detect_head(objet)
@@ -223,7 +216,6 @@ print("Code 200: "+str(code200)+" "+str(int(percent_200))+"%")
 print("Code 301: "+str(code301)+" "+str(int(percent_301))+"%")
 print("Code 403: "+str(code403)+" "+str(int(percent_403))+"%")
 print("Code 404: "+str(code404)+" "+str(int(percent_404))+"%")
-print("Nombre d'IP: "+str(ip))
 print("Nombre de GET: "+str(get)+" "+str(int(percent_get))+"%")
 print("Nombre de POST: "+str(post)+" "+str(int(percent_post))+"%")
 print("Nombre de HEAD: "+str(head)+" "+str(int(percent_head))+"%")
