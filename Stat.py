@@ -291,57 +291,39 @@ print("Connexion de 8H à 11H59: "+str(co_matin)+" "+str(int(percent_matin))+"%"
 print("Connexion de 12H à 17H: "+str(co_aprem)+" "+str(int(percent_aprem))+"%")
 print("Connexion autres que de 12H à 17H: "+str(co_hors_travail)+" "+str(int(percent_hors_travail))+"%")
 print("Nombre d'IP differents: "+str(adrip))
-print("Les adresse IP qui a de code réponse 403:")
+
+print()
+print("######################## Adresses IP associée à un code d'erreur ####################################")
+print()
+
+print("Les adresses IP qui ont le code de réponse 403:")
 print(ip403)
-print("Les adresse IP qui a de code réponse 404:")
+print()
+print("Les adresses IP qui ont le code de réponse 404:")
 print(ip404)
-print("Les adresse IP qui a de code réponse 404 plus de 5 fois:")
+print()
+print("Les adresses IP qui ont le code de réponse 301:")
+print(ip301)
+
+print()
+print("######################## Menace potentielle #########################################################")
+print()
+
+print("Les adresses IP qui ont le code de réponse 404 plus de 5 fois:")
 for l in ip404:
     if(ip404[l] > 5):
         print(l + ' : ' + str(ip404[l]) +' fois')
-print("Les adresse IP qui a de code réponse 301:")
-print(ip301)
-print("Les adresse IP qui a de code réponse 301 plus de 5 fois:")
+print()
+
+print("Les adresses IP qui ont le code de réponse 301 plus de 5 fois:")
 for l in ip301:
     if(ip301[l] > 5):
         print(l + ' : ' + str(ip301[l]) +' fois')
 
 print()
-print("##################################################################################################")
-print()
-
-#affichage graphique
-print()
-print("##################################################################################################")
-print()
-
-print("Mac: "+str(Mac)+" "+str(int(percent_Mac))+"%")
-print("Windows: "+str(Win)+" "+str(int(percent_Win))+"%")
-print("Linux: "+str(linux)+" "+str(int(percent_linux))+"%")
-print("IOS: "+str(ios)+" "+str(int(percent_ios))+"%")
-print("Android: "+str(android)+" "+str(int(percent_android))+"%")
-print("Chrome: "+str(chrome)+" "+str(int(percent_chrome))+"%")
-print("Safari: "+str(safari)+" "+str(int(percent_safari))+"%")
-print("Firefox: "+str(firefox)+" "+str(int(percent_firefox))+"%")
-print("Petit fichier(<=1000o): "+str(petitfichier)+" "+str(int(percent_petit_fic))+"%")
-print("Moyen fichier(>1000o): "+str(moyenfichier)+" "+str(int(percent_moyen_fic))+"%")
-print("Gros fichier(>=10 000o): "+str(grosfichier)+" "+str(int(percent_gros_fic))+"%")
-print("Code 200: "+str(code200)+" "+str(int(percent_200))+"%")
-print("Code 301: "+str(code301)+" "+str(int(percent_301))+"%")
-print("Code 403: "+str(code403)+" "+str(int(percent_403))+"%")
-print("Code 404: "+str(code404)+" "+str(int(percent_404))+"%")
-print("Nombre d'IP: "+str(adrip))
-print("Nombre de GET: "+str(get)+" "+str(int(percent_get))+"%")
-print("Nombre de POST: "+str(post)+" "+str(int(percent_post))+"%")
-print("Nombre de HEAD: "+str(head)+" "+str(int(percent_head))+"%")
-print("Nombre de Options: "+str(options)+" "+str(int(percent_options))+"%")
-print("Connexion de 8H à 11H59: "+str(co_matin)+" "+str(int(percent_matin))+"%")
-print("Connexion de 12H à 17H: "+str(co_aprem)+" "+str(int(percent_aprem))+"%")
-print("Connexion autres que de 12H à 17H: "+str(co_hors_travail)+" "+str(int(percent_hors_travail))+"%")
-print("Nombre d'IP differents: "+str(adrip))
 
 print()
-print("##################################################################################################")
+print("######################## Affichage graphique #########################################################")
 print()
 
 #affichage graphique
@@ -388,7 +370,8 @@ print("OPTIONS:  ["+int(percent_options)*"*"+"]"+" "+str(int(percent_options))+"
 print()
 
 print("Pourcentage taille de fichier utilisée: ")
-print("Petit fichier (<=1000o):    ["+int(percent_petit_fic)*"*"+"]"+" "+str(int(percent_petit_fic))+"%")
-print("Moyen fichier (>1000o):     ["+int(percent_moyen_fic)*"*"+"]"+" "+str(int(percent_moyen_fic))+"%")
-print("Gros fichier (>=10 000o):   ["+int(percent_gros_fic)*"*"+"]"+" "+str(int(percent_gros_fic))+"%")
+print("Petit fichier (<=1000o):              ["+int(percent_petit_fic)*"*"+"]"+" "+str(int(percent_petit_fic))+"%")
+print("Moyen fichier (>1000o & <10 000o):    ["+int(percent_moyen_fic)*"*"+"]"+" "+str(int(percent_moyen_fic))+"%")
+print("Gros fichier (>=10 000o):             ["+int(percent_gros_fic)*"*"+"]"+" "+str(int(percent_gros_fic))+"%")
 print()
+
