@@ -207,6 +207,42 @@ def detect_ipcode301(log):
             else :
                 dictip301[l['remote_ip']] = int(dictip301[l['remote_ip']]) + 1
     return dictip301
+def detect_ipcode400(log):
+    dictip400={}
+    for l in log :
+        if '400' in l['response']:#recherche des adresses IP qui a de code réponse 404
+            if l['remote_ip'] not in dictip400.keys():
+                dictip400[l['remote_ip']] = 1
+            else :
+                dictip400[l['remote_ip']] = int(dictip400[l['remote_ip']]) + 1
+    return dictip400
+def detect_ipcode500(log):
+    dictip500={}
+    for l in log :
+        if '500' in l['response']:#recherche des adresses IP qui a de code réponse 404
+            if l['remote_ip'] not in dictip500.keys():
+                dictip500[l['remote_ip']] = 1
+            else :
+                dictip500[l['remote_ip']] = int(dictip500[l['remote_ip']]) + 1
+    return dictip500
+def detect_ipcode206(log):
+    dictip206={}
+    for l in log :
+        if '206' in l['response']:#recherche des adresses IP qui a de code réponse 404
+            if l['remote_ip'] not in dictip206.keys():
+                dictip206[l['remote_ip']] = 1
+            else :
+                dictip206[l['remote_ip']] = int(dictip206[l['remote_ip']]) + 1
+    return dictip206
+def detect_ipcode416(log):
+    dictip416={}
+    for l in log :
+        if '416' in l['response']:#recherche des adresses IP qui a de code réponse 404
+            if l['remote_ip'] not in dictip416.keys():
+                dictip416[l['remote_ip']] = 1
+            else :
+                dictip416[l['remote_ip']] = int(dictip416[l['remote_ip']]) + 1
+    return dictip416
 
 
 #Utilisation des fonctions
