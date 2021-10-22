@@ -40,6 +40,6 @@
 * Moreau Matthew
 
 ## Contact
-Si vous rencontrez des soucis:
+Si vous rencontrez des problèmes:
 * matthew.moreau@etu.univ-cotedazur.fr
 * ker-chee.tung@etu.univ-cotedazur.fr
