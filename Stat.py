@@ -95,6 +95,36 @@ def detect_code404(log):
         if '404' in l['response']:  # recherche de 404 dans notre liste
             code404 = code404 + 1
     return code404
+def detect_code404(log):
+    code404 = 0
+    for l in log:
+        if '404' in l['response']:  # recherche de 404 dans notre liste
+            code404 = code404 + 1
+    return code404
+def detect_code400(log):
+    code400 = 0
+    for l in log:
+        if '400' in l['response']:  # recherche de 404 dans notre liste
+            code400 = code40O + 1
+    return code400
+def detect_code500(log):
+    code404 = 0
+    for l in log:
+        if '500' in l['response']:  # recherche de 404 dans notre liste
+            code500 = code500 + 1
+    return code500
+def detect_code206(log):
+    code206 = 0
+    for l in log:
+        if '206' in l['response']:  # recherche de 404 dans notre liste
+            code206 = code206 + 1
+    return code206
+def detect_code416(log):
+    code416 = 0
+    for l in log:
+        if '416' in l['response']:  # recherche de 404 dans notre liste
+            code416 = code416 + 1
+    return code416
 def detect_get(log):
     get = 0
     for l in log:
