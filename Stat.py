@@ -151,6 +151,31 @@ def detect_adr_ip(log):
         if l['remote_ip'] not in listeadrip:
             listeadrip.append(l['remote_ip']) #recherche des adresses IP differents
     return len(listeadrip)
+def detect_ipcode403(log):
+    liste_ip403=[]
+    for l in log:
+        if '403' in l['response']:#recherche des adresses IP qui a de code réponse 403
+            if l['remote_ip'] not in liste_ip403:
+                liste_ip403.append(l['remote_ip']) #si l'adresse ip n'existe pas encore dans la liste, il ajoute dans la liste
+    return liste_ip403
+def detect_ipcode404(log):
+    dictip404={}
+    for l in log :
+        if '404' in l['response']:#recherche des adresses IP qui a de code réponse 404
+            if l['remote_ip'] not in dictip404.keys():
+                dictip404[l['remote_ip']] = 1
+            else :
+                dictip404[l['remote_ip']] = int(dictip404[l['remote_ip']]) + 1
+    return dictip404
+def detect_ipcode301(log):
+    dictip301={}
+    for l in log :
+        if '301' in l['response']:#recherche des adresses IP qui a de code réponse 404
+            if l['remote_ip'] not in dictip301.keys():
+                dictip301[l['remote_ip']] = 1
+            else :
+                dictip301[l['remote_ip']] = int(dictip301[l['remote_ip']]) + 1
+    return dictip301
 
 
 #Utilisation des fonctions
@@ -177,6 +202,9 @@ co_matin=detect_heure_travail_matin(objet)
 co_aprem=detect_heure_travail_aprem(objet)
 co_hors_travail=detect_heure_supp(objet)
 adrip=detect_adr_ip(objet)
+ip403=detect_ipcode403(objet)
+ip404=detect_ipcode404(objet)
+ip301=detect_ipcode301(objet)
 
 #calcul pourcentage:
 percent_hors_travail=(co_hors_travail*100)/(co_matin+co_aprem+co_hors_travail)
@@ -232,6 +260,20 @@ print("Connexion de 8H à 11H59: "+str(co_matin)+" "+str(int(percent_matin))+"%"
 print("Connexion de 12H à 17H: "+str(co_aprem)+" "+str(int(percent_aprem))+"%")
 print("Connexion autres que de 12H à 17H: "+str(co_hors_travail)+" "+str(int(percent_hors_travail))+"%")
 print("Nombre d'IP differents: "+str(adrip))
+print("Les adresse IP qui a de code réponse 403:")
+print(ip403)
+print("Les adresse IP qui a de code réponse 404:")
+print(ip404)
+print("Les adresse IP qui a de code réponse 404 plus de 5 fois:")
+for l in ip404:
+    if(ip404[l] > 5):
+        print(l + ' : ' + str(ip404[l]) +' fois')
+print("Les adresse IP qui a de code réponse 301:")
+print(ip301)
+print("Les adresse IP qui a de code réponse 301 plus de 5 fois:")
+for l in ip301:
+    if(ip301[l] > 5):
+        print(l + ' : ' + str(ip301[l]) +' fois')
 
 print()
 print("##################################################################################################")
