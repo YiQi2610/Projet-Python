@@ -101,12 +101,6 @@ def detect_code404(log):
         if '404' in l['response']:  # recherche de 404 dans notre liste
             code404 = code404 + 1
     return code404
-def detect_code400(log):
-    code400 = 0
-    for l in log:
-        if '400' in l['response']:  # recherche de 404 dans notre liste
-            code400 = code400 + 1
-    return code400
 def detect_code500(log):
     code500 = 0
     for l in log:
@@ -207,15 +201,6 @@ def detect_ipcode301(log):
             else :
                 dictip301[l['remote_ip']] = int(dictip301[l['remote_ip']]) + 1
     return dictip301
-def detect_ipcode400(log):
-    dictip400={}
-    for l in log :
-        if '400' in l['response']:#recherche des adresses IP qui a de code réponse 404
-            if l['remote_ip'] not in dictip400.keys():
-                dictip400[l['remote_ip']] = 1
-            else :
-                dictip400[l['remote_ip']] = int(dictip400[l['remote_ip']]) + 1
-    return dictip400
 def detect_ipcode500(log):
     dictip500={}
     for l in log :
@@ -268,7 +253,6 @@ code200=detect_code200(objet)
 code301=detect_code301(objet)
 code403=detect_code403(objet)
 code404=detect_code404(objet)
-code400=detect_code400(objet)
 code500=detect_code500(objet)
 code416=detect_code416(objet)
 code206=detect_code206(objet)
@@ -288,14 +272,13 @@ ip301=detect_ipcode301(objet)
 percent_hors_travail=(co_hors_travail*100)/(co_matin+co_aprem+co_hors_travail)
 percent_aprem=(co_aprem*100)/(co_matin+co_aprem+co_hors_travail)
 percent_matin=(co_matin*100)/(co_matin+co_aprem+co_hors_travail)
-percent_200=(code200*100)/(code200+code301+code403+code404+code400+code206+code416+code500)
-percent_301=(code301*100)/(code200+code301+code403+code404+code400+code206+code416+code500)
-percent_403=(code403*100)/(code200+code301+code403+code404+code400+code206+code416+code500)
-percent_404=(code404*100)/(code200+code301+code403+code404+code400+code206+code416+code500)
-percent_400=(code400*100)/(code200+code301+code403+code404+code400+code206+code416+code500)
-percent_206=(code206*100)/(code200+code301+code403+code404+code400+code206+code416+code500)
-percent_416=(code416*100)/(code200+code301+code403+code404+code400+code206+code416+code500)
-percent_500=(code500*100)/(code200+code301+code403+code404+code400+code206+code416+code500)
+percent_200=(code200*100)/(code200+code301+code403+code404+code206+code416+code500)
+percent_301=(code301*100)/(code200+code301+code403+code404+code206+code416+code500)
+percent_403=(code403*100)/(code200+code301+code403+code404+code206+code416+code500)
+percent_404=(code404*100)/(code200+code301+code403+code404+code206+code416+code500)
+percent_206=(code206*100)/(code200+code301+code403+code404+code206+code416+code500)
+percent_416=(code416*100)/(code200+code301+code403+code404+code206+code416+code500)
+percent_500=(code500*100)/(code200+code301+code403+code404+code206+code416+code500)
 percent_Mac=(Mac*100)/(Mac+Win+linux)
 percent_Win=(Win*100)/(Mac+Win+linux)
 percent_linux=(linux*100)/(Mac+Win+linux)
@@ -338,7 +321,6 @@ print("Code 200: "+str(code200)+" "+str(int(percent_200))+"%")
 print("Code 301: "+str(code301)+" "+str(int(percent_301))+"%")
 print("Code 403: "+str(code403)+" "+str(int(percent_403))+"%")
 print("Code 404: "+str(code404)+" "+str(int(percent_404))+"%")
-print("Code 400: "+str(code400)+" "+str(int(percent_400))+"%")
 print("Code 416: "+str(code416)+" "+str(int(percent_416))+"%")
 print("Code 500: "+str(code500)+" "+str(int(percent_500))+"%")
 print("Code 206: "+str(code206)+" "+str(int(percent_206))+"%")
