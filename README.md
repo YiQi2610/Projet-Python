@@ -9,9 +9,6 @@
 ## Installation
  1. Dans projectpython2, mettre le nom du fichier Apache dans: lireficlog("")
  2. Exécuter projectpython2 
-```shell
-projectpython2 
- ```
  3. Exécuter Stat.py 
 
  Vous verrez dans la console python vos statistiques :)
