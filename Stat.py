@@ -105,10 +105,10 @@ def detect_code400(log):
     code400 = 0
     for l in log:
         if '400' in l['response']:  # recherche de 404 dans notre liste
-            code400 = code40O + 1
+            code400 = code400 + 1
     return code400
 def detect_code500(log):
-    code404 = 0
+    code500 = 0
     for l in log:
         if '500' in l['response']:  # recherche de 404 dans notre liste
             code500 = code500 + 1
