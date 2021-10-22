@@ -13,5 +13,10 @@
 
  Vous verrez dans la console python vos statistiques :)
 
-## Développeurs ###
+## Développeurs
 * Tung Ker Chee & Moreau Matthew
+
+## Contact
+Si vous rencontrez des soucis:
+* matthew.moreau@etu.univ-cotedazur.fr
+* ker-chee.tung@etu.univ-cotedazur.fr
