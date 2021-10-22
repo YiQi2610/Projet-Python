@@ -117,7 +117,7 @@ def detect_heure_travail_matin(log):
     for l in log:
         part_time=re.search(':([^ ]+)',l['time'])
         part_time2=part_time.group(1)
-        part_seconde=sum(x * int(t) for x, t in zip([3600, 60, 1], part_time2.split(":")))#conversion heure et minutes en secondes
+        part_seconde=sum(x * int(t) for x, t in zip([3600, 60, 1], part_time2.split(":")))#conversion heures et minutes en secondes
         if part_seconde >= 28800 and part_seconde < 43200:  # recherche heures de 8h à 11h59
             heure_travail_matin = heure_travail_matin + 1
     return heure_travail_matin
@@ -126,7 +126,7 @@ def detect_heure_travail_aprem(log):
     for l in log:
         part_time=re.search(':([^ ]+)',l['time'])
         part_time2=part_time.group(1)
-        part_seconde=sum(x * int(t) for x, t in zip([3600, 60, 1], part_time2.split(":")))#conversion heure et minutes en secondes
+        part_seconde=sum(x * int(t) for x, t in zip([3600, 60, 1], part_time2.split(":")))#conversion heures et minutes en secondes
         if part_seconde >= 43200 and part_seconde <= 61200:  # recherche heures de 12h à 17h
             heure_travail_aprem = heure_travail_aprem + 1
     return heure_travail_aprem
@@ -135,7 +135,7 @@ def detect_heure_supp(log):
     for l in log:
         part_time=re.search(':([^ ]+)',l['time'])
         part_time2=part_time.group(1)
-        part_seconde=sum(x * int(t) for x, t in zip([3600, 60, 1], part_time2.split(":")))#conversion heure et minutes en secondes
+        part_seconde=sum(x * int(t) for x, t in zip([3600, 60, 1], part_time2.split(":")))#conversion heures et minutes en secondes
         if part_seconde < 28800 or part_seconde > 61200:  # recherche heures différentes de 8h à 17h
             heure_supp = heure_supp + 1
     return heure_supp
@@ -143,7 +143,7 @@ def detect_adr_ip(log):
     listeadrip=[]
     for l in log:
         if l['remote_ip'] not in listeadrip:
-            listeadrip.append(l['remote_ip']) #recherche des adresse IP differents
+            listeadrip.append(l['remote_ip']) #recherche des adresses IP differents
     return len(listeadrip)
 
 
