@@ -7,9 +7,8 @@
 * Python 3.7
 * Mettre le fichier Apache dans le même dossier que le script 
 ## Installation
- 1. Dans `main.py`, mettre le nom du fichier Apache dans: lireficlog("")
- 2. Exécuter `main.py` 
- 3. Exécuter `Stat.py` 
+ 1. Exécuter `main.py` avec `chemin du fichier apache` `chemin du fichier json`
+ 2. Exécuter `Stat.py` 
 
  Vous verrez dans la console python vos statistiques :)
 ## Requête 
