@@ -8,8 +8,8 @@
 * Mettre le fichier Apache dans le même dossier que le script 
 ## Installation
  1. Dans `main.py`, mettre le nom du fichier Apache dans: lireficlog("")
- 2. Exécuter projectpython2 
- 3. Exécuter Stat.py 
+ 2. Exécuter `main.py` 
+ 3. Exécuter `Stat.py` 
 
  Vous verrez dans la console python vos statistiques :)
 ## Requête 
