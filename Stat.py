@@ -228,14 +228,14 @@ def detect_ipcode416(log):
             else :
                 dictip416[l['remote_ip']] = int(dictip416[l['remote_ip']]) + 1
     return dictip416
-def detect_adripmenace(log):
-    dictipmenace = {}
+def detect_adripfrequent(log):
+    dictipfrequent = {}
     for l in log:
-            if l['remote_ip'] not in dictipmenace.keys(): #recherche des adresses IP qui ont envoyé beaucoup de requêtes
-                dictipmenace[l['remote_ip']] = 1
+            if l['remote_ip'] not in dictipfrequent.keys(): #recherche des adresses IP qui ont envoyé beaucoup de requêtes
+                dictipfrequent[l['remote_ip']] = 1
             else:
-                dictipmenace[l['remote_ip']] = int(dictipmenace[l['remote_ip']]) + 1
-    return dictipmenace
+                dictipfrequent[l['remote_ip']] = int(dictipfrequent[l['remote_ip']]) + 1
+    return dictipfrequent
 
 #Utilisation des fonctions
 Mac=detect_mac(objet)
@@ -270,6 +270,7 @@ ip301=detect_ipcode301(objet)
 ip416=detect_ipcode416(objet)
 ip206=detect_ipcode206(objet)
 ip500=detect_ipcode500(objet)
+ipfrequent=detect_adripfrequent(objet)
 
 #calcul pourcentage:
 percent_hors_travail=(co_hors_travail*100)/(co_matin+co_aprem+co_hors_travail)
@@ -378,6 +379,11 @@ for l in ip301:
 
 print()
 
+print("Les adresses IP qui ont envoyé des requêtes plus de 100 fois:")
+for l in ipfrequent:
+    if(ipfrequent[l] > 100):
+        print(l + ' : ' + str(ipfrequent[l]) +' fois')
+        
 print()
 print("######################## Affichage graphique #########################################################")
 print()
