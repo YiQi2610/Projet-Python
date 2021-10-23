@@ -7,7 +7,7 @@
 * Python 3.7
 * Mettre le fichier Apache dans le même dossier que le script 
 ## Installation
- 1. Exécuter `main.py` avec `chemin du fichier apache` `chemin du fichier json`
+ 1. Exécuter `main.py` dans un terminal avec `chemin du fichier apache` et `chemin du fichier json`
  2. Exécuter `Stat.py` 
 
  Vous verrez dans la console python vos statistiques :)
