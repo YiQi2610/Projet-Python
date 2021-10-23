@@ -156,7 +156,7 @@ def detect_heure_travail_matin(log):
         part_time=re.search(':([^ ]+)',l['time'])
         part_time2=part_time.group(1)
         part_seconde=sum(x * int(t) for x, t in zip([3600, 60, 1], part_time2.split(":")))#conversion heures et minutes en secondes
-        if part_seconde >= 28800 and part_seconde < 43200:  # recherche heures de 8h à 11h59
+        if part_seconde >= 28800 and part_seconde <= 43200:  # recherche heures de 8h à 12h
             heure_travail_matin = heure_travail_matin + 1
     return heure_travail_matin
 def detect_heure_travail_aprem(log):
@@ -168,15 +168,24 @@ def detect_heure_travail_aprem(log):
         if part_seconde >= 43200 and part_seconde <= 61200:  # recherche heures de 12h à 17h
             heure_travail_aprem = heure_travail_aprem + 1
     return heure_travail_aprem
-def detect_heure_supp(log):
-    heure_supp = 0
+def detect_heure_soir(log):
+    heure_soir = 0
     for l in log:
         part_time=re.search(':([^ ]+)',l['time'])
         part_time2=part_time.group(1)
         part_seconde=sum(x * int(t) for x, t in zip([3600, 60, 1], part_time2.split(":")))#conversion heures et minutes en secondes
-        if part_seconde < 28800 or part_seconde > 61200:  # recherche heures différentes de 8h à 17h
-            heure_supp = heure_supp + 1
-    return heure_supp
+        if part_seconde >= 61200:  # recherche heures différentes de 17h à 0h
+            heure_soir = heure_soir + 1
+    return heure_soir
+def detect_heure_minuitplus(log):
+    heure_minuitplus = 0
+    for l in log:
+        part_time=re.search(':([^ ]+)',l['time'])
+        part_time2=part_time.group(1)
+        part_seconde=sum(x * int(t) for x, t in zip([3600, 60, 1], part_time2.split(":")))#conversion heures et minutes en secondes
+        if part_seconde <= 28800:  # recherche heures différentes de 0h à 8h
+            heure_minuitplus = heure_minuitplus + 1
+    return heure_minuitplus
 def detect_adr_ip(log):
     listeadrip=[]
     for l in log:
@@ -270,7 +279,8 @@ head=detect_head(objet)
 options=detect_options(objet)
 co_matin=detect_heure_travail_matin(objet)
 co_aprem=detect_heure_travail_aprem(objet)
-co_hors_travail=detect_heure_supp(objet)
+co_soir=detect_heure_soir(objet)
+co_minuitplus=detect_heure_minuitplus(objet)
 adrip=detect_adr_ip(objet)
 ip403=detect_ipcode403(objet)
 ip404=detect_ipcode404(objet)
@@ -281,9 +291,10 @@ ip500=detect_ipcode500(objet)
 ipfrequent=detect_adripfrequent(objet)
 
 #calcul pourcentage:
-percent_hors_travail=(co_hors_travail*100)/(co_matin+co_aprem+co_hors_travail)
-percent_aprem=(co_aprem*100)/(co_matin+co_aprem+co_hors_travail)
-percent_matin=(co_matin*100)/(co_matin+co_aprem+co_hors_travail)
+percent_minuitplus=(co_minuitplus*100)/(co_matin+co_aprem+co_soir+co_minuitplus)
+percent_soir=(co_soir*100)/(co_matin+co_aprem+co_soir+co_minuitplus)
+percent_aprem=(co_aprem*100)/(co_matin+co_aprem+co_soir+co_minuitplus)
+percent_matin=(co_matin*100)/(co_matin+co_aprem+co_soir+co_minuitplus)
 percent_200=(code200*100)/(code200+code301+code403+code404+code206+code416+code500)
 percent_301=(code301*100)/(code200+code301+code403+code404+code206+code416+code500)
 percent_403=(code403*100)/(code200+code301+code403+code404+code206+code416+code500)
@@ -351,9 +362,10 @@ print("Nombre de HEAD: "+str(head)+" "+str(int(percent_head))+"%")
 print("Nombre de Options: "+str(options)+" "+str(int(percent_options))+"%")
 print()
 print("###### Nombre de connexion par plage horaire ######")
-print("Connexion de 8H à 11H59: "+str(co_matin)+" "+str(int(percent_matin))+"%")
+print("Connexion de 8H à 12H:  "+str(co_matin)+" "+str(int(percent_matin))+"%")
 print("Connexion de 12H à 17H: "+str(co_aprem)+" "+str(int(percent_aprem))+"%")
-print("Connexion autres que de 12H à 17H: "+str(co_hors_travail)+" "+str(int(percent_hors_travail))+"%")
+print("Connexion de 17h à 0h:  "+str(co_soir)+" "+str(int(percent_soir))+"%")
+print("Connexion de 0h à 8h:   "+str(co_minuitplus)+" "+str(int(percent_minuitplus))+"%")
 print()
 print("Nombre d'IP differentes: "+str(adrip))
 
@@ -410,9 +422,10 @@ print()
 
 #affichage graphique
 print("Nombre de connexion par rapport à l'heure en %: ")
-print("8h-11h59:     ["+int(percent_matin)*"*"+"]"+" "+str(int(percent_matin))+"%")
-print("12h-17h:      ["+int(percent_aprem)*"*"+"]"+" "+str(int(percent_aprem))+"%")
-print("Hors 8h-17h : ["+int(percent_hors_travail)*"*"+"]"+" "+str(int(percent_hors_travail))+"%")
+print("8h-12H:     ["+int(percent_matin)*"*"+"]"+" "+str(int(percent_matin))+"%")
+print("12h-17h:    ["+int(percent_aprem)*"*"+"]"+" "+str(int(percent_aprem))+"%")
+print("17h-0h :    ["+int(percent_soir)*"*"+"]"+" "+str(int(percent_soir))+"%")
+print("0h-8h :     ["+int(percent_minuitplus)*"*"+"]"+" "+str(int(percent_minuitplus))+"%")
 print()
 
 print("Nombre de code d'erreur ou succés en %: ")
