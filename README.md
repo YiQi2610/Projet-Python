@@ -1,6 +1,6 @@
 # Projet-Python 
 ## Description 
-* `main.py`: Lit un fichier de log au format apache et le convertir au format json.
+* `main.py`: Lit un fichier de log au format apache et le convertit au format json.
 * `Stat.py`: Détermine les données qui peuvent être intéressantes d’un point de vue commercial et d’un point de vue sécurité et fait des statistiques.
 ## Environnement
 * Développement et test effectuée sur Linux, pas d'installation de bibliothèque externe.
