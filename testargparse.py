@@ -1,6 +1,6 @@
 import json,re,argparse,os
 #Creer le parser
-my_parser = argparse.ArgumentParser(description='Prendre un fichier de format apche et le transform en format json')
+my_parser = argparse.ArgumentParser(description='Prendre un fichier de format apche et le transforme en format json')
 
 #Ajouter des arguments
 my_parser.add_argument('Path_Fichier_Apache', metavar='fic_apache', type=str, help='le fichier apache our convertir en format json')
@@ -12,7 +12,7 @@ input_pathficapache = args.Path_Fichier_Apache
 input_ficjson = args.Fichier_Json
 
 if not os.path.isfile(input_pathficapache):
-    print('Le chemin pour le fichier apache n'existe pas)
+    print('Le chemin pour le fichier apache ne existe pas')
     sys.exit()
 
 #Lire le fichier log, séparer toutes les informations pour chaque objet et les mettre dans une liste objet:
@@ -40,7 +40,7 @@ def lireficlog(fic_log):
                 erreur.append(l)
     jsonfile = open(input_ficjson, "w")
     json.dump(objet, jsonfile, indent=4, sort_keys=False)
-    jsonfile.close()input_ficjson
+    jsonfile.close()
     return objet
 
 lireficlog(input_pathficapache)
