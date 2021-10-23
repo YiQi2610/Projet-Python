@@ -5,13 +5,13 @@ with open('apache_json.json') as json_file:
 def detect_mac(log):
     mac = 0
     for l in log:
-        if 'Mac' in l['system_agent']:          # recherche Mac OS dans notre liste
+        if 'mac' in l['system_agent']:          # recherche mac OS dans notre liste
             mac = mac + 1
     return mac
 def detect_win(log):
     win = 0
     for l in log:
-        if 'Windows' in l['system_agent']:  # recherche windows dans notre liste
+        if 'windows' in l['system_agent']:  # recherche windows dans notre liste
             win = win + 1
     return win
 def detect_linux(log):
@@ -254,8 +254,8 @@ def detect_adripfrequent(log):
     return dictipfrequent
 
 #Utilisation des fonctions
-Mac=detect_mac(objet)
-Win=detect_win(objet)
+mac=detect_mac(objet)
+win=detect_win(objet)
 linux=detect_linux(objet)
 ios=detect_ios(objet)
 android=detect_android(objet)
@@ -302,13 +302,13 @@ percent_404=(code404*100)/(code200+code301+code403+code404+code206+code416+code5
 percent_206=(code206*100)/(code200+code301+code403+code404+code206+code416+code500)
 percent_416=(code416*100)/(code200+code301+code403+code404+code206+code416+code500)
 percent_500=(code500*100)/(code200+code301+code403+code404+code206+code416+code500)
-percent_Mac=(Mac*100)/(Mac+Win+linux)
-percent_Win=(Win*100)/(Mac+Win+linux)
-percent_linux=(linux*100)/(Mac+Win+linux)
+percent_mac=(mac*100)/(mac+win+linux)
+percent_win=(win*100)/(mac+win+linux)
+percent_linux=(linux*100)/(mac+win+linux)
 percent_ios=(ios*100)/(ios+android)
 percent_android=(android*100)/(ios+android)
-percent_pc=((Mac+Win+linux)*100)/((Mac+Win+linux)+(ios+android))
-percent_mobile=((ios+android)*100)/((Mac+Win+linux)+(ios+android))
+percent_pc=((mac+win+linux)*100)/((mac+win+linux)+(ios+android))
+percent_mobile=((ios+android)*100)/((mac+win+linux)+(ios+android))
 percent_chrome=(chrome*100)/(chrome+firefox+safari)
 percent_firefox=(firefox*100)/(chrome+firefox+safari)
 percent_safari=(safari*100)/(chrome+firefox+safari)
@@ -327,8 +327,8 @@ print("#########################################################################
 print()
 
 print("###### Nombre des différents OS PC utilisé ######")
-print("Mac: "+str(Mac)+" "+str(int(percent_Mac))+"%")
-print("Windows: "+str(Win)+" "+str(int(percent_Win))+"%")
+print("mac: "+str(mac)+" "+str(int(percent_mac))+"%")
+print("windows: "+str(win)+" "+str(int(percent_win))+"%")
 print("Linux: "+str(linux)+" "+str(int(percent_linux))+"%")
 print()
 print("###### Nombre des différents OS Mobile utilisé ######")
@@ -439,8 +439,8 @@ print("206:  ["+int(percent_206)*"*"+"]"+" "+str(int(percent_206))+"%")
 print()
 
 print("Pourcentage OS PC utilisé: ")
-print("Mas OS:   ["+int(percent_Mac)*"*"+"]"+" "+str(int(percent_Mac))+"%")
-print("Windows:  ["+int(percent_Win)*"*"+"]"+" "+str(int(percent_Win))+"%")
+print("Mas OS:   ["+int(percent_mac)*"*"+"]"+" "+str(int(percent_mac))+"%")
+print("windows:  ["+int(percent_win)*"*"+"]"+" "+str(int(percent_win))+"%")
 print("Linux:    ["+int(percent_linux)*"*"+"]"+" "+str(int(percent_linux))+"%")
 print()
 
