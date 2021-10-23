@@ -38,7 +38,7 @@ def lireficlog(fic_log):
                 objet.append(dictionnaire)
             else:
                 erreur.append(l)
-    jsonfile = open(input_ficjson, "w")
+    jsonfile = open(input_ficjson+ '.json', "w")
     json.dump(objet, jsonfile, indent=4, sort_keys=False)
     jsonfile.close()
     return objet
