@@ -18,13 +18,13 @@ with open(input_pathficjson) as json_file:
 def detect_mac(log):
     mac = 0
     for l in log:
-        if 'mac' in l['system_agent']:          # recherche mac OS dans notre liste
+        if 'Mac' in l['system_agent']:          # recherche mac OS dans notre liste
             mac = mac + 1
     return mac
 def detect_win(log):
     win = 0
     for l in log:
-        if 'windows' in l['system_agent']:  # recherche windows dans notre liste
+        if 'Windows' in l['system_agent']:  # recherche windows dans notre liste
             win = win + 1
     return win
 def detect_linux(log):
