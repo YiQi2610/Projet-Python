@@ -1,6 +1,19 @@
-from main import lireficlog,re,json
-lireficlog("apache_logs")
-with open('apache_json.json') as json_file:
+import re,json,argparse,os
+#Creer le parser
+my_parser = argparse.ArgumentParser(description='Prendre un fichier json et analyse pour afficher les statistiques')
+
+#Ajouter des arguments
+my_parser.add_argument('Path_Fichier_Json', metavar='fic_json', type=str, help='le chemin de fichier json')
+
+#Executer le parse_args() methode
+args = my_parser.parse_args()
+input_pathficjson = args.Path_Fichier_Json
+
+if not os.path.isfile(input_pathficjson):
+    print('Le chemin pour le fichier json ne existe pas')
+    sys.exit()
+    
+with open(input_pathficjson) as json_file:
     objet=json.load(json_file)
 def detect_mac(log):
     mac = 0
