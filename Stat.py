@@ -1,4 +1,4 @@
-from projectpython2 import lireficlog,re,json
+from main import lireficlog,re,json
 lireficlog("apache_logs")
 with open('apache_json.json') as json_file:
     objet=json.load(json_file)
