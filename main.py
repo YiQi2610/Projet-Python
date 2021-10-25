@@ -1,4 +1,4 @@
-import json,re,argparse,os
+import json,re,argparse,os,sys
 #Creer le parser
 my_parser = argparse.ArgumentParser(description='Prendre un fichier au format apache et le transformer en format json')
 
