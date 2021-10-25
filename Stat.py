@@ -1,4 +1,4 @@
-import re,json,argparse,os
+import re,json,argparse,os,sys
 #Creer le parser
 my_parser = argparse.ArgumentParser(description='Prendre un fichier json et analyse pour afficher les statistiques')
 
@@ -115,28 +115,22 @@ def detect_code404(log):
         if '404' in l['response']:  # recherche de 404 dans notre liste
             code404 = code404 + 1
     return code404
-def detect_code404(log):
-    code404 = 0
-    for l in log:
-        if '404' in l['response']:  # recherche de 404 dans notre liste
-            code404 = code404 + 1
-    return code404
 def detect_code500(log):
     code500 = 0
     for l in log:
-        if '500' in l['response']:  # recherche de 404 dans notre liste
+        if '500' in l['response']:  # recherche de 500 dans notre liste
             code500 = code500 + 1
     return code500
 def detect_code206(log):
     code206 = 0
     for l in log:
-        if '206' in l['response']:  # recherche de 404 dans notre liste
+        if '206' in l['response']:  # recherche de 206 dans notre liste
             code206 = code206 + 1
     return code206
 def detect_code416(log):
     code416 = 0
     for l in log:
-        if '416' in l['response']:  # recherche de 404 dans notre liste
+        if '416' in l['response']:  # recherche de 416 dans notre liste
             code416 = code416 + 1
     return code416
 def detect_get(log):
@@ -224,7 +218,7 @@ def detect_ipcode404(log):
 def detect_ipcode301(log):
     dictip301={}
     for l in log :
-        if '301' in l['response']:#recherche des adresses IP qui ont le code de réponse 404
+        if '301' in l['response']:#recherche des adresses IP qui ont le code de réponse 301
             if l['remote_ip'] not in dictip301.keys():
                 dictip301[l['remote_ip']] = 1
             else :
@@ -233,7 +227,7 @@ def detect_ipcode301(log):
 def detect_ipcode500(log):
     dictip500={}
     for l in log :
-        if '500' in l['response']:#recherche des adresses IP qui ont le code de réponse 404
+        if '500' in l['response']:#recherche des adresses IP qui ont le code de réponse 500
             if l['remote_ip'] not in dictip500.keys():
                 dictip500[l['remote_ip']] = 1
             else :
@@ -242,7 +236,7 @@ def detect_ipcode500(log):
 def detect_ipcode206(log):
     dictip206={}
     for l in log :
-        if '206' in l['response']:#recherche des adresses IP qui ont le code de réponse 404
+        if '206' in l['response']:#recherche des adresses IP qui ont le code de réponse 206
             if l['remote_ip'] not in dictip206.keys():
                 dictip206[l['remote_ip']] = 1
             else :
@@ -251,7 +245,7 @@ def detect_ipcode206(log):
 def detect_ipcode416(log):
     dictip416={}
     for l in log :
-        if '416' in l['response']:#recherche des adresses IP qui oont le code de réponse 404
+        if '416' in l['response']:#recherche des adresses IP qui oont le code de réponse 416
             if l['remote_ip'] not in dictip416.keys():
                 dictip416[l['remote_ip']] = 1
             else :
