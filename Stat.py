@@ -264,7 +264,7 @@ def detect_jour(log):
     for l in log:
         part_time=re.search('([^:]+)',l['time'])
         part_time2=part_time.group(1)
-        if part_time2 not in dict_co_jour.keys(): 
+        if part_time2 not in dict_co_jour.keys(): # recherche des nombre de connexions par jour
             dict_co_jour[part_time2] = 1
         else:
             dict_co_jour[part_time2]=int(dict_co_jour[part_time2]) + 1
