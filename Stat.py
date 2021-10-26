@@ -338,6 +338,12 @@ percent_gros_fic=(grosfichier*100)/(grosfichier+petitfichier+moyenfichier+tresgr
 percent_petit_fic=(petitfichier*100)/(grosfichier+petitfichier+moyenfichier+tresgrosfichier)
 percent_moyen_fic=(moyenfichier*100)/(grosfichier+petitfichier+moyenfichier+tresgrosfichier)
 percent_tresgros_fic=(tresgrosfichier*100)/(grosfichier+petitfichier+moyenfichier+tresgrosfichier)
+connexion_total=0
+for i in co_jour:
+    connexion_total=connexion_total+co_jour[i]
+    dict_percent_co_jour={}
+for i in co_jour:
+    dict_percent_co_jour[i]= (co_jour[i] * 100) / connexion_total
 
 #affichage:
 print()
@@ -388,7 +394,8 @@ print()
 print("Nombre d'IP differentes: "+str(adrip))
 print()
 print("Connexion par jour: ")
-print(co_jour)
+for i in co_jour:
+    print(i+" : " + str(co_jour[i]) +' ' + str(int(dict_percent_co_jour[i])) + "%")
 print()
 
 print()
@@ -495,3 +502,7 @@ print("Moyen fichier (>1000o & <10 000o):    ["+int(percent_moyen_fic)*"*"+"]"+"
 print("Gros fichier (>10 000o & <100 000o):  ["+int(percent_gros_fic)*"*"+"]"+" "+str(int(percent_gros_fic))+"%")
 print("Très gros fichier (>=100 000o):       ["+int(percent_tresgros_fic)*"*"+"]"+" "+str(int(percent_tresgros_fic))+"%")
 print()
+
+print("Nombre de connexions par jour: ")
+for i in co_jour:
+    print(i+" : [" + int(dict_percent_co_jour[i]) * "*" + "]" + " " + str(int(dict_percent_co_jour[i])) + "%")
