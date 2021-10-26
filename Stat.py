@@ -259,6 +259,16 @@ def detect_adripfrequent(log):
             else:
                 dictipfrequent[l['remote_ip']] = int(dictipfrequent[l['remote_ip']]) + 1
     return dictipfrequent
+def detect_jour(log):
+    dict_co_jour = {}
+    for l in log:
+        part_time=re.search('([^:]+)',l['time'])
+        part_time2=part_time.group(1)
+        if part_time2 not in dict_co_jour.keys(): 
+            dict_co_jour[part_time2] = 1
+        else:
+            dict_co_jour[part_time2]=int(dict_co_jour[part_time2]) + 1
+    return dict_co_jour
 
 #Utilisation des fonctions
 mac=detect_mac(objet)
@@ -296,6 +306,7 @@ ip416=detect_ipcode416(objet)
 ip206=detect_ipcode206(objet)
 ip500=detect_ipcode500(objet)
 ipfrequent=detect_adripfrequent(objet)
+co_jour=detect_jour(objet)
 
 #calcul pourcentage:
 percent_minuitplus=(co_minuitplus*100)/(co_matin+co_aprem+co_soir+co_minuitplus)
@@ -375,6 +386,10 @@ print("Connexion de 17h à 0h:  "+str(co_soir)+" "+str(int(percent_soir))+"%")
 print("Connexion de 0h à 8h:   "+str(co_minuitplus)+" "+str(int(percent_minuitplus))+"%")
 print()
 print("Nombre d'IP differentes: "+str(adrip))
+print()
+print("Connexion par jour: ")
+print(co_jour)
+print()
 
 print()
 print("######################## Adresses IP associée à un code d'erreur ####################################")
