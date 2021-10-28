@@ -36,7 +36,7 @@
 * Le nombre de requête fructueuse et les différents code erreurs
 * Le pourcentage de system d'exploitation mobile ou fixe  
 * Le pourcentage des différentes tailles de paquets
-* Eventuelle adressse ip malvrillante
+* Les éventuelles adressse ip malvaillante
 ## Développeurs
 * Tung Ker Chee
 * Moreau Matthew
