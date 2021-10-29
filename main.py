@@ -23,8 +23,7 @@ def lireficlog(fic_log):
         global erreur
         objet = []
         erreur = []
-        i = 0
-        nombre_de_ligne=0
+        nombre_de_ligne=0 #compteur pour le numéro de ligne
         for l in ficlog:#parcourir toutes les lignes du fichier et creer un dictionnaire pour chaque ligne
             dictionnaire = {}
             pattern = '([^ ]+).+\[(.*)\] .+(GET[^"]+|HEAD[^"]+|POST[^"]+|OPTION[^"]+)" ([0-9]+|\-) ([0-9]+|\-) "(http[^"]+|\-)"."(.*)"' #recuperer toutes les informations en utilisant l'expression régulière
@@ -37,18 +36,20 @@ def lireficlog(fic_log):
                 dictionnaire['bytes'] = param.group(5)
                 dictionnaire['referrer'] = param.group(6)
                 dictionnaire['system_agent'] = param.group(7)
-                nombre_de_ligne=nombre_de_ligne+1
+                numero_de_ligne=numero_de_ligne+1
                 objet.append(dictionnaire)
             else:
-                nombre_de_ligne=nombre_de_ligne+1
+                numero_de_ligne=numero_de_ligne+1
                 dictionnaire_erreur = {}
-                dictionnaire_erreur['ligne']=l#si il n'y a pas d'objet qui correspond au pattern, la ligne est ajoutée dans la liste erreur
-                dictionnaire_erreur['nombre de ligne']=nombre_de_ligne
-                erreur.append(dictionnaire_erreur)
-    jsonfile = open(input_ficjson + '.json', "w")
+                dictionnaire_erreur['ligne']=l
+                dictionnaire_erreur['numero de ligne']=numero_de_ligne
+                erreur.append(dictionnaire_erreur)#si il n'y a pas d'objet qui correspond au pattern, la ligne est ajoutée dans la liste erreur
+    jsonfile = open(input_ficjson + '.json', "w")#creer le fichier json avec le nom deu fichier donné comme argument
     json.dump(objet, jsonfile, indent=4, sort_keys=False)#mettre notre liste dans un fichier json
     jsonfile.close()
 
 lireficlog(input_pathficapache)
-print('Ligne où il y a une erreur:')#afficher la ligne qui correspond pas au pattern
+print('Ligne où il y a une erreur:')#afficher la ligne et son numéro qui correspond pas au pattern
+for i in erreur:
+    print('Ligne' + str(i['numero de ligne']) + ' : ' +i['ligne'])
 print(erreur)
