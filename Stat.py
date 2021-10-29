@@ -271,7 +271,14 @@ def detect_jour(log):# recherche des nombre de connexions par jour
         else:
             dict_co_jour[part_time2]=int(dict_co_jour[part_time2]) + 1
     return dict_co_jour
-
+def detect_sitefrequent(log): #recherche des adresses IP qui ont envoyé beaucoup de requêtes
+    dictsitefrequent = {}
+    for l in log:
+            if l['referrer'] not in dictsitefrequent.keys():
+                dictsitefrequent[l['referrer']] = 1
+            else:
+                dictsitefrequent[l['referrer']] = int(dictsitefrequent[l['referrer']]) + 1
+    return dictsitefrequent
 #Utilisation des fonctions avec comme argument le dictionnaire de notre fichier json
 mac=detect_mac(objet)
 win=detect_win(objet)
@@ -309,6 +316,7 @@ ip206=detect_ipcode206(objet)
 ip500=detect_ipcode500(objet)
 ipfrequent=detect_adripfrequent(objet)
 co_jour=detect_jour(objet)
+sitefrequent=detect_sitefrequent(objet)
 
 #calcul des pourcentages:
 percent_minuitplus=(co_minuitplus*100)/(co_matin+co_aprem+co_soir+co_minuitplus)
@@ -399,7 +407,10 @@ print("Connexion par jour: ")
 for i in co_jour:
     print(i+" : " + str(co_jour[i]) +' ' + str(int(dict_percent_co_jour[i])) + "%")
 print()
-
+print("###### Les pages web les plus visités ######")
+for i in sitefrequent:
+	if sitefrequent[i]>100 and i != '-':
+		print(i +' : ' +str(sitefrequent[i]) + ' fois')
 print()
 print("######################## Adresses IP associée à un code d'erreur ####################################")
 print()
