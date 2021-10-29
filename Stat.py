@@ -9,155 +9,157 @@ my_parser.add_argument('Path_Fichier_Json', metavar='fic_json', type=str, help='
 args = my_parser.parse_args()
 input_pathficjson = args.Path_Fichier_Json
 
+#Si le chemin n'existe pas, le code n'est pas effectué
 if not os.path.isfile(input_pathficjson):
     print('Le chemin pour le fichier json ne existe pas')
     sys.exit()
     
 with open(input_pathficjson) as json_file:
+    #Ouvrir le fichier json et recuperer les dictionnaires
     objet=json.load(json_file)
-def detect_mac(log):
+def detect_mac(log): # recherche mac OS dans notre liste
     mac = 0
     for l in log:
-        if 'Mac' in l['system_agent']:          # recherche mac OS dans notre liste
+        if 'Mac' in l['system_agent']:          
             mac = mac + 1
     return mac
-def detect_win(log):
+def detect_win(log): # recherche windows dans notre liste
     win = 0
     for l in log:
-        if 'Windows' in l['system_agent']:  # recherche windows dans notre liste
+        if 'Windows' in l['system_agent']: 
             win = win + 1
     return win
-def detect_linux(log):
+def detect_linux(log):# recherche linux dans notre liste
     linux = 0
     for l in log:
-        if 'Linux' in l['system_agent']:  # recherche linux dans notre liste
+        if 'Linux' in l['system_agent']:  
             linux = linux + 1
     return linux
-def detect_ios(log):
+def detect_ios(log):# recherche ios dans notre liste
     ios = 0
     for l in log:
-        if 'iPhone' in l['system_agent']:  # recherche ios dans notre liste
+        if 'iPhone' in l['system_agent']:  
             ios = ios + 1
     return ios
-def detect_android(log):
+def detect_android(log):# recherche android dans notre liste
     android = 0
     for l in log:
-        if 'Android' in l['system_agent']:  # recherche android dans notre liste
+        if 'Android' in l['system_agent']:  
             android = android + 1
     return android
-def detect_chrome(log):
+def detect_chrome(log):# recherche Chrome dans notre liste
     chrome = 0
     for l in log:
-        if 'Chrome' in l['system_agent']:  # recherche Chrome dans notre liste
+        if 'Chrome' in l['system_agent']:  
             chrome = chrome + 1
     return chrome
-def detect_safari(log):
+def detect_safari(log): # recherche Safari dans notre liste
     safari = 0
     for l in log:
-        if 'Safari' in l['system_agent']:  # recherche Safari dans notre liste
+        if 'Safari' in l['system_agent']: 
             safari = safari + 1
     return safari
-def detect_firefox(log):
+def detect_firefox(log):# recherche Firefox dans notre liste
     firefox = 0
     for l in log:
-        if 'Firefox' in l['system_agent']:  # recherche Firefox dans notre liste
+        if 'Firefox' in l['system_agent']:  
             firefox = firefox + 1
     return firefox
-def detect_petitfichier(log):
+def detect_petitfichier(log):# recherche de fichier inférieur à 1000o dans notre liste
     petitfic = 0
     for l in log:
         if l['bytes'] != '-':
-            if int(l['bytes']) <= int(1000):  # recherche de fichier inférieur à 1000o dans notre liste
+            if int(l['bytes']) <= int(1000): 
                 petitfic =petitfic + 1
     return petitfic
-def detect_moyenfichier(log):
+def detect_moyenfichier(log): # recherche de fichier supérieur à 1000o dans notre liste
     moyenfic = 0
     for l in log:
         if l['bytes'] != '-':
-            if int(l['bytes']) < int(10000) and int(l['bytes']) > int(1000):  # recherche de fichier supérieur à 1000o dans notre liste
+            if int(l['bytes']) < int(10000) and int(l['bytes']) > int(1000): 
                 moyenfic = moyenfic + 1
     return moyenfic
-def detect_grosfichier(log):
+def detect_grosfichier(log):# recherche de fichier supérieur à 10 000o dans notre liste
     grosfic = 0
     for l in log:
         if l['bytes'] != '-':
-            if int(l['bytes']) < int(100000) and int(l['bytes']) > int(10000):  # recherche de fichier supérieur à 10 000o dans notre liste
+            if int(l['bytes']) < int(100000) and int(l['bytes']) > int(10000):  
                 grosfic = grosfic + 1
     return grosfic
-def detect_tresgrosfichier(log):
+def detect_tresgrosfichier(log): # recherche de fichier supérieur à 100 000o dans notre liste
     tresgrosfic = 0
     for l in log:
         if l['bytes'] != '-':
-            if int(l['bytes']) >= int(100000):  # recherche de fichier supérieur à 100 000o dans notre liste
+            if int(l['bytes']) >= int(100000): 
                 tresgrosfic = tresgrosfic + 1
     return tresgrosfic
-def detect_code200(log):
+def detect_code200(log):# recherche de 200 dans notre liste
     code200 = 0
     for l in log:
-        if '200' in l['response']:  # recherche de 200 dans notre liste
+        if '200' in l['response']:  
             code200 = code200 + 1
     return code200
-def detect_code301(log):
+def detect_code301(log):# recherche de 301 dans notre liste
     code301 = 0
     for l in log:
-        if '301' in l['response']:  # recherche de 301 dans notre liste
+        if '301' in l['response']:  
             code301 = code301 + 1
     return code301
-def detect_code403(log):
+def detect_code403(log):# recherche de 403 dans notre liste
     code403 = 0
     for l in log:
-        if '403' in l['response']:  # recherche de 403 dans notre liste
+        if '403' in l['response']:  
             code403 = code403 + 1
     return code403
-def detect_code404(log):
+def detect_code404(log):# recherche de 404 dans notre liste
     code404 = 0
     for l in log:
-        if '404' in l['response']:  # recherche de 404 dans notre liste
+        if '404' in l['response']:  
             code404 = code404 + 1
     return code404
-def detect_code500(log):
+def detect_code500(log):# recherche de 500 dans notre liste
     code500 = 0
     for l in log:
-        if '500' in l['response']:  # recherche de 500 dans notre liste
+        if '500' in l['response']:  
             code500 = code500 + 1
     return code500
-def detect_code206(log):
+def detect_code206(log):# recherche de 206 dans notre liste
     code206 = 0
     for l in log:
-        if '206' in l['response']:  # recherche de 206 dans notre liste
+        if '206' in l['response']:  
             code206 = code206 + 1
     return code206
-def detect_code416(log):
+def detect_code416(log):# recherche de 416 dans notre liste
     code416 = 0
     for l in log:
-        if '416' in l['response']:  # recherche de 416 dans notre liste
+        if '416' in l['response']:  
             code416 = code416 + 1
     return code416
-def detect_get(log):
+def detect_get(log):# recherche des GET dans notre liste
     get = 0
     for l in log:
-        if 'GET' in l['request']:  # recherche des GET dans notre liste
+        if 'GET' in l['request']:  
             get = get + 1
     return get
-def detect_post(log):
+def detect_post(log):# recherche des POST dans notre liste
     post = 0
     for l in log:
-        if 'POST' in l['request']:  # recherche des POST dans notre liste
+        if 'POST' in l['request']:  
             post = post + 1
     return post
-def detect_head(log):
+def detect_head(log): # recherche des HEAD dans notre liste
     head = 0
     for l in log:
-        if 'HEAD' in l['request']:  # recherche des HEAD dans notre liste
+        if 'HEAD' in l['request']: 
             head = head + 1
     return head
-def detect_options(log):
+def detect_options(log):# recherche des OPTIONS dans notre liste
     options = 0
     for l in log:
-        if 'OPTIONS' in l['request']:  # recherche des OPTIONS dans notre liste
+        if 'OPTIONS' in l['request']:  
             options= options + 1
     return options
-def detect_heure_travail_matin(log):
+def detect_heure_travail_matin(log):# recherche des connexions entre 8h et 12h dans notre liste
     heure_travail_matin = 0
     for l in log:
         part_time=re.search(':([^ ]+)',l['time'])
@@ -166,7 +168,7 @@ def detect_heure_travail_matin(log):
         if part_seconde >= 28800 and part_seconde <= 43200:  # recherche heures de 8h à 12h
             heure_travail_matin = heure_travail_matin + 1
     return heure_travail_matin
-def detect_heure_travail_aprem(log):
+def detect_heure_travail_aprem(log):# recherche des connexions entre 12h et 17h dans notre liste
     heure_travail_aprem = 0
     for l in log:
         part_time=re.search(':([^ ]+)',l['time'])
@@ -175,7 +177,7 @@ def detect_heure_travail_aprem(log):
         if part_seconde >= 43200 and part_seconde <= 61200:  # recherche heures de 12h à 17h
             heure_travail_aprem = heure_travail_aprem + 1
     return heure_travail_aprem
-def detect_heure_soir(log):
+def detect_heure_soir(log):# recherche des connexions entre 17h et 0h dans notre liste
     heure_soir = 0
     for l in log:
         part_time=re.search(':([^ ]+)',l['time'])
@@ -184,7 +186,7 @@ def detect_heure_soir(log):
         if part_seconde >= 61200:  # recherche heures différentes de 17h à 0h
             heure_soir = heure_soir + 1
     return heure_soir
-def detect_heure_minuitplus(log):
+def detect_heure_minuitplus(log):# recherche des connexions entre 0h et 8h dans notre liste
     heure_minuitplus = 0
     for l in log:
         part_time=re.search(':([^ ]+)',l['time'])
@@ -193,78 +195,78 @@ def detect_heure_minuitplus(log):
         if part_seconde <= 28800:  # recherche heures différentes de 0h à 8h
             heure_minuitplus = heure_minuitplus + 1
     return heure_minuitplus
-def detect_adr_ip(log):
+def detect_adr_ip(log): #recherche des adresses IP differentes
     listeadrip=[]
     for l in log:
         if l['remote_ip'] not in listeadrip:
-            listeadrip.append(l['remote_ip']) #recherche des adresses IP differentes
+            listeadrip.append(l['remote_ip'])
     return len(listeadrip)
-def detect_ipcode403(log):
+def detect_ipcode403(log):#recherche des adresses IP qui ont le code de réponse 403
     liste_ip403=[]
     for l in log:
-        if '403' in l['response']:#recherche des adresses IP qui ont le code de réponse 403
+        if '403' in l['response']:
             if l['remote_ip'] not in liste_ip403:
                 liste_ip403.append(l['remote_ip']) #si l'adresse ip n'existe pas encore dans la liste, il l'ajoute dans la liste
     return liste_ip403
-def detect_ipcode404(log):
+def detect_ipcode404(log):#recherche des adresses IP qui ont le code de réponse 404
     dictip404={}
     for l in log :
-        if '404' in l['response']:#recherche des adresses IP qui ont le code de réponse 404
+        if '404' in l['response']:
             if l['remote_ip'] not in dictip404.keys():
                 dictip404[l['remote_ip']] = 1
             else :
                 dictip404[l['remote_ip']] = int(dictip404[l['remote_ip']]) + 1
     return dictip404
-def detect_ipcode301(log):
+def detect_ipcode301(log):#recherche des adresses IP qui ont le code de réponse 301
     dictip301={}
     for l in log :
-        if '301' in l['response']:#recherche des adresses IP qui ont le code de réponse 301
+        if '301' in l['response']:
             if l['remote_ip'] not in dictip301.keys():
                 dictip301[l['remote_ip']] = 1
             else :
                 dictip301[l['remote_ip']] = int(dictip301[l['remote_ip']]) + 1
     return dictip301
-def detect_ipcode500(log):
+def detect_ipcode500(log):#recherche des adresses IP qui ont le code de réponse 500
     dictip500={}
     for l in log :
-        if '500' in l['response']:#recherche des adresses IP qui ont le code de réponse 500
+        if '500' in l['response']:
             if l['remote_ip'] not in dictip500.keys():
                 dictip500[l['remote_ip']] = 1
             else :
                 dictip500[l['remote_ip']] = int(dictip500[l['remote_ip']]) + 1
     return dictip500
-def detect_ipcode206(log):
+def detect_ipcode206(log):#recherche des adresses IP qui ont le code de réponse 206
     dictip206={}
     for l in log :
-        if '206' in l['response']:#recherche des adresses IP qui ont le code de réponse 206
+        if '206' in l['response']:
             if l['remote_ip'] not in dictip206.keys():
                 dictip206[l['remote_ip']] = 1
             else :
                 dictip206[l['remote_ip']] = int(dictip206[l['remote_ip']]) + 1
     return dictip206
-def detect_ipcode416(log):
+def detect_ipcode416(log):#recherche des adresses IP qui oont le code de réponse 416
     dictip416={}
     for l in log :
-        if '416' in l['response']:#recherche des adresses IP qui oont le code de réponse 416
+        if '416' in l['response']:
             if l['remote_ip'] not in dictip416.keys():
                 dictip416[l['remote_ip']] = 1
             else :
                 dictip416[l['remote_ip']] = int(dictip416[l['remote_ip']]) + 1
     return dictip416
-def detect_adripfrequent(log):
+def detect_adripfrequent(log): #recherche des adresses IP qui ont envoyé beaucoup de requêtes
     dictipfrequent = {}
     for l in log:
-            if l['remote_ip'] not in dictipfrequent.keys(): #recherche des adresses IP qui ont envoyé beaucoup de requêtes
+            if l['remote_ip'] not in dictipfrequent.keys():
                 dictipfrequent[l['remote_ip']] = 1
             else:
                 dictipfrequent[l['remote_ip']] = int(dictipfrequent[l['remote_ip']]) + 1
     return dictipfrequent
-def detect_jour(log):
+def detect_jour(log):# recherche des nombre de connexions par jour
     dict_co_jour = {}
     for l in log:
         part_time=re.search('([^:]+)',l['time'])
         part_time2=part_time.group(1)
-        if part_time2 not in dict_co_jour.keys(): # recherche des nombre de connexions par jour
+        if part_time2 not in dict_co_jour.keys(): 
             dict_co_jour[part_time2] = 1
         else:
             dict_co_jour[part_time2]=int(dict_co_jour[part_time2]) + 1
