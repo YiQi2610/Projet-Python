@@ -23,7 +23,7 @@ def lireficlog(fic_log):
         global erreur
         objet = []
         erreur = []
-        nombre_de_ligne=0 #compteur pour le numéro de ligne
+        numero_de_ligne=0 #compteur pour le numéro de ligne
         for l in ficlog:#parcourir toutes les lignes du fichier et creer un dictionnaire pour chaque ligne
             dictionnaire = {}
             pattern = '([^ ]+).+\[(.*)\] .+(GET[^"]+|HEAD[^"]+|POST[^"]+|OPTION[^"]+)" ([0-9]+|\-) ([0-9]+|\-) "(http[^"]+|\-)"."(.*)"' #recuperer toutes les informations en utilisant l'expression régulière
@@ -51,5 +51,5 @@ def lireficlog(fic_log):
 lireficlog(input_pathficapache)
 print('Ligne où il y a une erreur:')#afficher la ligne et son numéro qui correspond pas au pattern
 for i in erreur:
-    print('Ligne' + str(i['numero de ligne']) + ' : ' +i['ligne'])
-print(erreur)
+    print('Ligne ' + str(i['numero de ligne']) + ' : ' +i['ligne'])
+
