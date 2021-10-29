@@ -24,6 +24,7 @@ def lireficlog(fic_log):
         objet = []
         erreur = []
         i = 0
+        nombre_de_ligne=0
         for l in ficlog:#parcourir toutes les lignes du fichier et creer un dictionnaire pour chaque ligne
             dictionnaire = {}
             pattern = '([^ ]+).+\[(.*)\] .+(GET[^"]+|HEAD[^"]+|POST[^"]+|OPTION[^"]+)" ([0-9]+|\-) ([0-9]+|\-) "(http[^"]+|\-)"."(.*)"' #recuperer toutes les informations en utilisant l'expression régulière
@@ -36,9 +37,14 @@ def lireficlog(fic_log):
                 dictionnaire['bytes'] = param.group(5)
                 dictionnaire['referrer'] = param.group(6)
                 dictionnaire['system_agent'] = param.group(7)
+                nombre_de_ligne=nombre_de_ligne+1
                 objet.append(dictionnaire)
             else:
-                erreur.append(l)#si il n'y a pas d'objet qui correspond au pattern, la ligne est ajoutée dans la liste erreur
+                nombre_de_ligne=nombre_de_ligne+1
+                dictionnaire_erreur = {}
+                dictionnaire_erreur['ligne']=l#si il n'y a pas d'objet qui correspond au pattern, la ligne est ajoutée dans la liste erreur
+                dictionnaire_erreur['nombre de ligne']=nombre_de_ligne
+                erreur.append(dictionnaire_erreur)
     jsonfile = open(input_ficjson + '.json', "w")
     json.dump(objet, jsonfile, indent=4, sort_keys=False)#mettre notre liste dans un fichier json
     jsonfile.close()
