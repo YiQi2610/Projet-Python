@@ -272,7 +272,7 @@ def detect_jour(log):# recherche des nombre de connexions par jour
             dict_co_jour[part_time2]=int(dict_co_jour[part_time2]) + 1
     return dict_co_jour
 
-#Utilisation des fonctions
+#Utilisation des fonctions avec comme argument le dictionnaire de notre fichier json
 mac=detect_mac(objet)
 win=detect_win(objet)
 linux=detect_linux(objet)
@@ -310,7 +310,7 @@ ip500=detect_ipcode500(objet)
 ipfrequent=detect_adripfrequent(objet)
 co_jour=detect_jour(objet)
 
-#calcul pourcentage:
+#calcul des pourcentages:
 percent_minuitplus=(co_minuitplus*100)/(co_matin+co_aprem+co_soir+co_minuitplus)
 percent_soir=(co_soir*100)/(co_matin+co_aprem+co_soir+co_minuitplus)
 percent_aprem=(co_aprem*100)/(co_matin+co_aprem+co_soir+co_minuitplus)
